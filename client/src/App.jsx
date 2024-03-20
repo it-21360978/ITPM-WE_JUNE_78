@@ -1,12 +1,21 @@
-import React from 'react'
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Login from './pages/Login';
 
 export default function App() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline text-center">
-      Hello world!
-    </h1>
-      
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
     </div>
-  )
+  );
 }
