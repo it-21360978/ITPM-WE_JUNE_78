@@ -20,7 +20,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/r" element={<Register />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPW />} />
           <Route path="/reset-password" element={<Reset />} />
           <Route path="/" element={<Navigate to="/login" />} />

@@ -1,8 +1,47 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {validateEmail,validatePassword} from '../validations/AuthValidations';
+import {login} from '../API/Auth.controller'
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const loginHandler = async (e)=>{
+    e.preventDefault();
+
+    //check email valid or not
+    const emailValidate = validateEmail(email);
+    if(emailValidate){
+      setError(emailValidate);
+      return;
+    }else{
+      setError(null);
+    }
+
+    //check password valid or not
+    const passwordValidate = validatePassword(password);
+    if(!passwordValidate){
+      setError(passwordValidate);
+      return;
+    }else{
+      setError(null);
+    }
+    try{
+      const response = await login(email,password);
+      console.log(response);
+      const {token,data} = response.data;
+      sessionStorage.setItem('userData',JSON.stringify({token,user:data}));
+      
+    }catch(err) {
+      setError(err.message);
+    }
+    
+
+  };
+
+
 
   return (
     <div className=" min-h-screen">
@@ -53,11 +92,13 @@ export default function Login() {
             </div>
 
             {/**form field */}
-            <form className="flex flex-col pt-3 md:pt-10">
+            <form className="flex flex-col pt-3 md:pt-10" onSubmit={loginHandler}>
               <div className="flex flex-col pt-4">
                 <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="login-email"
                     className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
                     placeholder="Email"
@@ -68,15 +109,17 @@ export default function Login() {
                 <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                   <input
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="login-password"
                     className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none"
                     placeholder="Password"
                   />
                 </div>
               </div>
-              <button className=" mx-auto mr-2 text-sm mb-12 text-orange-700 hover:underline">
+            <Link to= '/forgot-password'> <button className=" mx-auto mr-2 text-sm mb-12 text-orange-700 hover:underline">
                 forgot Password
-              </button>
+              </button></Link> 
               <button
                 type="submit"
                 className="w-full rounded-lg bg-orange-600 hover:bg-orange-700 hover:rounded-full px-4 py-3 text-center text-base font-semibold uppercase text-white shadow-xl ring-gray-500 ring-offset-2 transition focus:ring-2"
@@ -87,12 +130,11 @@ export default function Login() {
             <div className="py-12 text-center gap-3">
               <p className="whitespace-nowrap text-gray-600">
                 Don't have an account?
-                <a
-                  href="#"
+           <Link to='/register'> <button
                   className="underline-offset-4 font-semibold text-orange-900 underline ml-3"
                 >
                   Sign up for free.
-                </a>
+                </button></Link>  
               </p>
             </div>
           </div>
