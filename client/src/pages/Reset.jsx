@@ -1,6 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react';
+import {resetPassword} from '../API/Auth.controller'
+import {validatePassword,validateConfirmPassword} from '../validations/AuthValidations'
+
 
 export default function Reset() {
+
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const resetHandler = async(e)=>{
+    e.preventDefault();
+
+    const PasswordError = validatePassword(password);
+    const ConfirmPasswordError = validateConfirmPassword(password,confirmPassword);
+   
+    //check password
+    if(PasswordError){
+      setError(PasswordError);
+      return;
+    }else{
+      setError('');
+    }
+
+    //check confirm password
+    if (ConfirmPasswordError) {
+      setError(ConfirmPasswordError);
+      return;
+    } else {
+      setError('');
+    }
+    try {
+      const response = await resetPassword(token, password);
+      setSuccess(response.message);
+    } catch (error) {
+      setError(error.message);
+    }
+  
+  }
+
+
+
+
   return (
     <div className="relative h-screen">
       {/* Background Image with Overlay */}
@@ -25,19 +67,19 @@ export default function Reset() {
 
             <div className="mt-6">
               {/* Form */}
-              <form>
+              <form onSubmit={resetHandler}>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
                     <label htmlFor="Password" className="mb-2 block text-sm text-gray-600">New Password</label>
                     <div className="relative">
-                      <input type="password" id="pw" name="password" className="peer block w-full rounded-md border border-gray-200 bg-gray-50 py-3 px-4 text-sm outline-none ring-offset-1 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500" placeholder='**********'/>
+                      <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} id="pw" name="password" className="peer block w-full rounded-md border border-gray-200 bg-gray-50 py-3 px-4 text-sm outline-none ring-offset-1 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500" placeholder='**********'/>
                     </div>
                   </div>
                   <div>
                     <label htmlFor="Password" className="mb-2 block text-sm text-gray-600">Confirm new Password</label>
                     <div className="relative">
-                      <input type="password" id="pw" name="password" className="peer block w-full rounded-md border border-gray-200 bg-gray-50 py-3 px-4 text-sm outline-none ring-offset-1 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500" placeholder='**********'/>
+                      <input type="password" value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}id="confirmPw" name="confirmPw" className="peer block w-full rounded-md border border-gray-200 bg-gray-50 py-3 px-4 text-sm outline-none ring-offset-1 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500" placeholder='**********'/>
                     </div>
                   </div>
                   {/* /Form Group */}
