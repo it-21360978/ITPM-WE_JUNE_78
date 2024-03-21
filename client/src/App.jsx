@@ -11,7 +11,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPW from './pages/ForgotPW';
 import Reset from './pages/Reset';
-
+import ProductAdd from './pages/ProductAdd';
+import Plist from "./pages/productlist";
+import ProductView from "./pages/productView";
 
 
 export default function App() {
@@ -24,6 +26,11 @@ export default function App() {
           <Route path="/forgot-password" element={<ForgotPW />} />
           <Route path="/reset-password" element={<Reset />} />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/add" element={<ProductAdd />} />
+          <Route path="/plist" exact element={<Plist/>} />
+          <Route path="/pview" exact element={<ProductView/>} />
+  
+
         </Routes>
       </Router>
     </div>
