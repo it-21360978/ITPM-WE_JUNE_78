@@ -1,6 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react';
+import{validateEmail} from '../validations/AuthValidations';
+import {forgotPwReq} from '../API/Auth.controller'
 
 export default function ForgotPW() {
+
+const [email,setEmail] = useState('');
+const [emailError,setEmailError] = useState('');
+
+const forgotPwHandler = async (req,res) =>{
+  req.preventDefault();
+  
+  const emailCheck= validateEmail(email);
+  //check email
+  if(emailCheck){
+    setEmailError(emailCheck);
+  }else{
+    setEmailError('');
+  }
+
+ //call the Api method
+ try {
+  const response = await forgotPwReq(email);
+  console.log(response);
+  if(response.status === 200){
+    alert('Reset link has been sent to your email');
+  }
+  else{
+    alert('Something went wrong');
+  }
+  
+ } catch (error) {
+    console.log(error);
+    alert('Something went wrong');
+  
+ }
+}
+
+
+
   return (
    <div className="relative h-screen">
       {/* Background Image with Overlay */}
@@ -25,13 +62,13 @@ export default function ForgotPW() {
 
             <div className="mt-6">
               {/* Form */}
-              <form>
+              <form onSubmit={forgotPwHandler}>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
                     <label htmlFor="email" className="mb-2 block text-sm text-gray-600">Email address</label>
                     <div className="relative">
-                      <input type="email" id="email" name="email" className="peer block w-full rounded-md border border-gray-200 bg-gray-50 py-3 px-4 text-sm outline-none ring-offset-1 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500" placeholder='Email Here'/>
+                      <input type="email" value={email} onChange={(e)=> setEmail(e.target.value)} id="email" name="email" className="peer block w-full rounded-md border border-gray-200 bg-gray-50 py-3 px-4 text-sm outline-none ring-offset-1 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500" placeholder='Email Here'/>
                     </div>
                   </div>
                   {/* /Form Group */}
