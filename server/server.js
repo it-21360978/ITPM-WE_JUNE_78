@@ -7,7 +7,7 @@ dotenv.config();
 
 
 // import defined routes 
-const productRoutes = require('./routes/products');
+const productRoutes = require('./src/Routes/products');
 
 // express instance 
 const app = express();

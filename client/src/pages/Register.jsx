@@ -1,6 +1,64 @@
-import React from "react";
+import React,{useState} from "react";
+import { Link } from "react-router-dom";
+import {validateFirstName,validateLastName,validateEmail,validatePassword,validateConfirmPassword} from '../validations/AuthValidations';
+import {register} from '../API/Auth.controller';
 
 export default function Register() {
+
+  const [firstName,setFirstName] = useState('');
+  const [lastName,setLastName] = useState('');
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [confirmPassword,setConfirmPassword] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [error,setError] = useState('');
+  const [success,setSuccess] = useState('');
+
+
+  const registerHandler = async (req,res)=>{
+    req.preventDefault();
+    const firstNameCheck = validateFirstName(firstName);
+    const lastNameCheck = validateLastName(lastName);
+    const emailCheck = validateEmail(email);
+    const passwordCheck = validatePassword(password);
+    const confirmPasswordCheck = validateConfirmPassword(password,confirmPassword);
+
+    if(firstNameCheck){
+      setError(firstNameCheck);
+    }else if(lastNameCheck){
+      setError(lastNameCheck);
+    }else if(emailCheck){
+      setError(emailCheck);
+    }else if(passwordCheck){
+      setError(passwordCheck);
+    }else if(confirmPasswordCheck){
+      setError(confirmPasswordCheck);
+    }else if(!acceptTerms){
+      setError('Please accept the terms and conditions');
+    } 
+    else{
+      setError('');
+    }
+
+    try {
+      const response = await register(firstName,lastName,email,password);
+      console.log(response);
+      if(response.status === 200){
+        setSuccess('Account created successfully');
+      }else{
+        setError('Something went wrong');
+      }
+    } catch (error) {
+      console.log(error);
+      setError('Something went wrong');
+    }
+  }
+
+  const handleCheckboxChange = () => {
+    setAcceptTerms(!acceptTerms); 
+  }
+
+
   return (
     <div>
       <section className="bg-white">
@@ -25,7 +83,7 @@ export default function Register() {
                 unlock a world of fashion possibilities with Envough!
               </p>
 
-              <form action="#" className="mt-8 grid grid-cols-6 gap-6 md:mt-10">
+              <form action="#" className="mt-8 grid grid-cols-6 gap-6 md:mt-10" onSubmit={registerHandler}>
                 <div className="col-span-6 sm:col-span-3">
                   <label
                     htmlFor="FirstName"
@@ -36,6 +94,8 @@ export default function Register() {
 
                   <input
                     type="text"
+                    value={firstName}
+                    onChange={(e)=> setFirstName(e.target.value)}
                     id="FirstName"
                     name="first_name"
                     className="mt-1 w-full border-b py-2 border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:border-orange-600 transition duration-150 ease-in-out shadow-sm"
@@ -53,6 +113,8 @@ export default function Register() {
 
                   <input
                     type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     id="LastName"
                     name="last_name"
                     className="mt-1 w-full border-b py-2 border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:border-orange-600 transition duration-150 ease-in-out shadow-sm"
@@ -70,6 +132,8 @@ export default function Register() {
 
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="Email"
                     name="email"
                     className="mt-1 w-full border-b py-2 border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:border-orange-600 transition duration-150 ease-in-out shadow-sm"
@@ -87,6 +151,8 @@ export default function Register() {
 
                   <input
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="Password"
                     name="password"
                     className="mt-1 w-full border-b py-2 border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:border-orange-600 transition duration-150 ease-in-out shadow-sm"
@@ -103,6 +169,8 @@ export default function Register() {
 
                   <input
                     type="password"
+                    value={confirmPassword}
+                    onChange={(e)=>setConfirmPassword(e.target.value)}
                     id="PasswordConfirmation"
                     name="password_confirmation"
                     className="mt-1 w-full border-b py-2 border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:border-orange-600 transition duration-150 ease-in-out shadow-sm"
@@ -113,6 +181,7 @@ export default function Register() {
                   <div className=" flex flex-row gap-5">
                     <input
                       type="checkbox"
+                      checked={acceptTerms}
                       id="Accept"
                       name="accept_terms"
                       className="size-5 rounded-md border-gray-200 bg-white shadow-sm"
@@ -134,15 +203,15 @@ export default function Register() {
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center gap-6 mt-4">
-                  <button className="inline-block shrink-0 rounded-md border border-gray-600 bg-orange-600 shadow-lg px-16 py-3 text-sm font-medium text-white transition  hover:bg-orange-700 hover:rounded-full  focus:outline-none focus:ring active:text-orange-500">
+                  <button type="submit" className="inline-block shrink-0 rounded-md border border-gray-600 bg-orange-600 shadow-lg px-16 py-3 text-sm font-medium text-white transition  hover:bg-orange-700 hover:rounded-full  focus:outline-none focus:ring active:text-orange-500 uppercase">
                     Create an account
                   </button>
 
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                     Already have an account?
-                    <a href="#" className="text-orange-700 underline ml-3">
+                 <Link to='/login'><button className="text-orange-700 underline ml-3">
                       Log in
-                    </a>
+                    </button></Link> 
                     .
                   </p>
                 </div>
