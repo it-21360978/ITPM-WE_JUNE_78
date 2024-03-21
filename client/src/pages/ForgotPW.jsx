@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import{validateEmail} from '../validations/AuthValidations';
 import {forgotPwReq} from '../API/Auth.controller'
 
@@ -83,7 +84,7 @@ const forgotPwHandler = async (req,res) =>{
           <p className="mt-3 flex items-center justify-center divide-x divide-gray-300 text-center mb-5">
             <span className="inline pr-3 text-sm text-gray-600">
               Remember your password?
-              <a className="font-medium text-orange-700 decoration-2 hover:underline" > Sign in here </a>
+           <Link to='/login'>  <button className="font-medium text-orange-700 decoration-2 hover:underline" > Sign in here </button></Link> 
             </span>
             <a className="pl-3 text-sm text-gray-600 decoration-2 hover:text-orange-700 hover:underline" href="#" target="_blank"> Contact Support </a>
           </p>

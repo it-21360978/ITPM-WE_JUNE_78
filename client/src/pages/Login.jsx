@@ -94,7 +94,7 @@ export default function Login() {
             {/**form field */}
             <form className="flex flex-col pt-3 md:pt-10" onSubmit={loginHandler}>
               <div className="flex flex-col pt-4">
-                <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
+                <div className="focus-within:border-b-orange-500 relative flex overflow-hidden border-b-2 transition">
                   <input
                     type="email"
                     value={email}
@@ -106,7 +106,7 @@ export default function Login() {
                 </div>
               </div>
               <div className="mb-4 flex flex-col pt-6">
-                <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
+                <div className="focus-within:border-b-orange-500 relative flex overflow-hidden border-b-2 transition">
                   <input
                     type="password"
                     value={password}
@@ -117,8 +117,8 @@ export default function Login() {
                   />
                 </div>
               </div>
-            <Link to= '/forgot-password'> <button className=" mx-auto mr-2 text-sm mb-12 text-orange-700 hover:underline">
-                forgot Password
+            <Link to= '/forgot-password'> <button className=" flex float-right mx-auto mr-2 text text-sm mb-12 text-orange-700 hover:underline">
+                forgot Password ?
               </button></Link> 
               <button
                 type="submit"
