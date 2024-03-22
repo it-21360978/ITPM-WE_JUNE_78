@@ -22,7 +22,7 @@ export const cloth=[
     {
         "image": "https://rukminim1.flixcart.com/image/612/612/l3t2fm80/ethnic-set/o/q/7/m-9kbd183-samah-original-imageuh5a8hgwusj.jpeg?q=70",
         "brand": "Samah",
-        "title": "Women Kurta, Pant And Dupatta Set Silk Blend, Cotton Bl...",
+        "title": "Women Kurta, Pant And Dupatta Set Silk Blend",
         "color": "",
         "selling_price": "Rs.702",
         "price": "Rss.3,997",
@@ -382,7 +382,7 @@ export const cloth=[
     {
         "image": "https://rukminim1.flixcart.com/image/612/612/xif0q/salwar-kurta-dupatta/c/2/s/m-bunnai-butti-m-dachima-original-imaggz9axrqadjvz.jpeg?q=70",
         "brand": "DACHIMA",
-        "title": "Women Pure Cotton Printed Straight Kurta with Pant & Du...",
+        "title": "Women Pure Cotton Printed Straight Kurta",
         "color": "",
         "selling_price": "₹590",
         "price": "₹2,499",

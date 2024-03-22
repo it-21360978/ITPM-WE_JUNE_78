@@ -1,120 +1,153 @@
-import React, { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 
-const ProductAdd = () => {
+function ProductEdit(props) {
+  const [ProductName, setProductName] = useState("");
+  const [Brand, setBrand] = useState("");
+  const [color, setcolor] = useState("");
+  const [Quantity, setQuantity] = useState("");
+  const [Category, setCategory] = useState("");
+  const [Type, setType] = useState("");
+  const [size, setsize] = useState("");
+  const [Description, setDescription] = useState("");
+  const [URL, setURL] = useState("");
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const [state, setState] = useState({
-    ProductName:'',
-    Brand: '',
-    color: '',
-    Quantity: '',
-    Category: '',
-    Type: '',
-    size: '',
-    Description: '',
-    URL: ''
-  });
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios.get(`http://localhost:3030/product/${id}`).then((res)=>{
+      if(res.data.success){
+        setProductName(res.data.product.ProductName);
+        setBrand(res.data.product.Brand);
+        setcolor(res.data.product.color);
+        setQuantity(res.data.product.Quantity);
+        setCategory(res.data.product.Category);
+        setType(res.data.product.Type);
+        setsize(res.data.product.size);
+        setDescription(res.data.product.Description);
+        setURL(res.data.product.URL);
+      }
+    });
+  }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setState(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-    // Clear all errors on input change
-    setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: ''
+
+    if (name === "ProductName") {
+      setProductName(value);
+    } else if (name === "Brand") {
+      setBrand(value);
+    } else if (name === "color") {
+      setcolor(value);
+    } else if (name === "Quantity") {
+      setQuantity(value);
+    } else if (name === "Category") {
+        setCategory(value);
+    } else if (name === "Type") {
+        setType(value);
+    } else if (name === "size") {
+        setsize(value);
+    } else if (name === "Description") {
+        setDescription(value);
+    } else if (name === "URL") {
+        setURL(value);
+    }
+     // Clear specific error message
+  setErrors((prevErrors) => ({
+    ...prevErrors,
+    [name]: ''
   }));
-};
+  };
 
   const validateForm = () => {
     const newErrors = {};
-
+  
     // Validate all fields
-    if (!state.ProductName) {
-      newErrors.ProductName = "Product Name is required";
-    }
-    if (!state.Brand) {
-      newErrors.Brand = "Brand is required";
-    }
-    if (!state.color) {
-      newErrors.color = "Color is required";
-    }
-    if (!state.Quantity) {
-      newErrors.Quantity = "Quantity is required";
-    }
-    if (!state.Category) {
-      newErrors.Category = "Category is required";
-    }
-    if (!state.Type) {
-      newErrors.Type = "Type is required";
-    }
-    if (!state.size) {
-      newErrors.size = "Size is required";
-    }
-    if (!state.Description) {
-      newErrors.Description = "Description is required";
-    }
-    if (!state.URL) {
-      newErrors.URL = "URL is required";
-    }
-
-    setErrors(newErrors);
-
+    if (!ProductName) {
+        newErrors.ProductName = "Product Name is required";
+      }
+      if (!Brand) {
+        newErrors.Brand = "Brand is required";
+      }
+      if (!color) {
+        newErrors.color = "Color is required";
+      }
+      if (!Quantity) {
+        newErrors.Quantity = "Quantity is required";
+      }
+      if (!Category) {
+        newErrors.Category = "Category is required";
+      }
+      if (!Type) {
+        newErrors.Type = "Type is required";
+      }
+      if (!size) {
+        newErrors.size = "Size is required";
+      }
+      if (!Description) {
+        newErrors.Description = "Description is required";
+      }
+      if (!URL) {
+        newErrors.URL = "URL is required";
+      }
+  
+      setErrors(newErrors);
+  
     // Return true if there are no errors
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      const { ProductName, Brand, color, Quantity, Category, Type, size, Description, URL} = state;
-      const data = {
-        ProductName,
-        Brand,
-        color,
-        Quantity,
-        Category,
-        Type,
-        size,
-        Description,
-        URL
-      };
-      axios.post("http://localhost:3030/product/save", data)
-      .then((res) => {
-        if (res.data.success) {
-          alert("Product Added Successfully");
-          setState({
-            ProductName:'',
-            Brand: '',
-            color: '',
-            Quantity: '',
-            Category: '',
-            Type: '',
-            size: '',
-            Description: '',
-            URL: ''
-            
-          });
-          navigate('/plist');
-        }
-      })
-    }
+    
+    
+  if (validateForm()) {
+    const data = {
+        ProductName:ProductName,
+        Brand:Brand,
+        color:color,
+        Quantity:Quantity,
+        Category:Category,
+        Type:Type,
+        size:size,
+        Description:Description,
+        URL:URL
+    };
+
+   
+    
+    axios.put(`http://localhost:3030/product/update/${id}`, data).then((res) => {
+      if (res.data.success) {
+        alert("Product Update Successfully");
+        setProductName("");
+        setBrand("");
+        setcolor("");
+        setQuantity("");
+        setCategory("");
+        setType("");
+        setsize("");
+        setDescription("");
+        setURL("");
+        navigate('/plist');
+      }
+    });
+  }
   };
 
   return (
-     
-  <div className="min-w-0 flex-1 ">
-  <br></br>
-  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mb-10 flex justify-center">
-  Add New Products
- </h2>
-
-<div className="mx-auto max-auto px-8  ">
-  <form >
+    <div className="min-w-0 flex-1 ">
+    <br></br>
+    <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mb-10 flex px-8 ">
+    Edit Product
+   </h2>
+  
+  <div className="mx-auto max-auto px-8  ">
+<form >
     <div className="grid gap-6 mb-6 md:grid-cols-2">
       <div>
         <label htmlFor="product name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
@@ -124,7 +157,7 @@ const ProductAdd = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="ProductName"
             placeholder="ProductName"
-            value={state.ProductName}
+            value={ProductName}
             onChange={handleInputChange}
             required
           />
@@ -138,7 +171,7 @@ const ProductAdd = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Brand"
             placeholder="brand"
-            value={state.Brand}
+            value={Brand}
             onChange={handleInputChange}
             required
           />
@@ -152,7 +185,7 @@ const ProductAdd = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="color"
             placeholder="color"
-            value={state.color}
+            value={color}
             onChange={handleInputChange}
             required
           />
@@ -166,7 +199,7 @@ const ProductAdd = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Quantity"
             placeholder="quantity"
-            value={state.Quantity}
+            value={Quantity}
             onChange={handleInputChange}
             required
           />
@@ -180,7 +213,7 @@ const ProductAdd = () => {
             placeholder="quantity"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Category"
-            value={state.Category}
+            value={Category}
             onChange={handleInputChange}
             required>
           <option value="Men">Men</option>
@@ -196,7 +229,7 @@ const ProductAdd = () => {
             id="Type"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Type"
-            value={state.Type}
+            value={Type}
             onChange={handleInputChange}
             required>
           <option value="Top">Top</option>
@@ -210,7 +243,7 @@ const ProductAdd = () => {
          <select 
           name="size"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-          value={state.size} 
+          value={size} 
           onChange={handleInputChange} required>
           <option value="S">S</option>
           <option value="M">M</option>
@@ -229,7 +262,7 @@ const ProductAdd = () => {
             <textarea id="Description" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
             name="Description"
             placeholder="Enter Product  Details here"
-            value={state.Description}
+            value={Description}
             onChange={handleInputChange} required></textarea>
             {errors.Description && <p className="text-red-500">{errors.Description}</p>}
      </div>
@@ -241,7 +274,7 @@ const ProductAdd = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="URL"
             placeholder="picture url"
-            value={state.URL}
+            value={URL}
             onChange={handleInputChange}
             required
           />
@@ -250,16 +283,16 @@ const ProductAdd = () => {
 
     <div className="flex justify-center">
     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-20 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-  onClick={onSubmit}>Submit</button>
+  onClick={onSubmit}>Update</button>
     </div>
 
 
   </form>
+
   </div>
   <br></br>
 </div>
     )
   }
 
-  export default ProductAdd;
-
+export default ProductEdit;

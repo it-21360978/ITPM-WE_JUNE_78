@@ -14,6 +14,9 @@ import Reset from './pages/Reset';
 import ProductAdd from './pages/ProductAdd';
 import Plist from "./pages/productlist";
 import ProductView from "./pages/productView";
+import ProductEdit from './pages/ProductEdit';
+import Pfilter from './pages/ProductFilter';
+
 
 
 export default function App() {
@@ -28,7 +31,9 @@ export default function App() {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/add" element={<ProductAdd />} />
           <Route path="/plist" exact element={<Plist/>} />
-          <Route path="/pview" exact element={<ProductView/>} />
+          <Route path="/pview" exact element={<ProductView/>} />         
+          <Route path="/pedit/:id" exact element={<ProductEdit/>} />
+          <Route path="/pfilter" exact element={<Pfilter/>}/>
   
 
         </Routes>
