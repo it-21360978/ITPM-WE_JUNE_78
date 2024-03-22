@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // // using routes 
 // app.use('/api',apiRouter);
-// app.use(productRoutes);
+app.use(productRoutes);
 app.use('/api', userRoutes);
 
 
