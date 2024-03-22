@@ -100,13 +100,16 @@ export default function ProductView() {
 
         {/* Image gallery */}
         <div className="flex flex-col items-center">
-          <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
-            <img
-              src={product.images[0].src}
-              alt={product.images[0].alt}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
+  <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem] relative">
+    <img
+      src={product.images[0].src}
+      alt={product.images[0].alt}
+      className="h-full w-full object-cover object-center"
+    />
+    <button className="absolute top-10 right-10 transform translate-x-1/2 -translate-y-1/2 bg-green-500 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl">
+      3D
+    </button>
+  </div>
           <div className="flex flex-wrap space-x-5 justify-center">
            {product.images.map((item)=> <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
               <img

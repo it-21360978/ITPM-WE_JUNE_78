@@ -21,19 +21,21 @@ const productSchema = new mongoose.Schema({
   },
 
   Quantity: {
-    type: String,
+    type: Number,
     required: true,
     default: "",
   },
 
   Category: {
     type: String,
+    enum: ['Men', 'Woamn',],
    required: true,
     default: "",
   },
 
   Type: {
     type: String,
+    enum: ['Top', 'Lower',],
    required: true,
     default: "",
   },

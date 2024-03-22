@@ -1,349 +1,165 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { cloth } from '../products/cloth.js'
-import ProductCard from '../products/productCard.jsx'
-import '../products/FilterData.js';
 
-const sortOptions = [
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
-
-export const color= [
-    
-  'white',
-  'black',
-  'red',
-  'marun',
-  'being',
-  'pink',
-  'green', 
-  'yellow', 
-];
+import React, { useState, useEffect} from 'react';
+import axios from 'axios';
 
 
-export const filters = [
-{
-id: 'color',
-name: 'Color',
-options: [
-  { value: 'white', label: 'White', checked: false },
-  { value: 'beige', label: 'Beige', checked: false },
-  { value: 'blue', label: 'Blue', checked: true },
-  { value: 'brown', label: 'Brown', checked: false },
-  { value: 'green', label: 'Green', checked: false },
-  { value: 'purple', label: 'Purple', checked: false },
-],
-},
-{
-id: 'size',
-name: 'size',
-options: [
-  { value: 'S', label: 'S', checked: false },
-  { value: 'M', label: 'M', checked: false },
-  { value: 'L', label: 'L', checked: true },
-  { value: 'XL', label: 'XL', checked: false },
-],
-}
-]
 
-export const singleFilter=[
-{
-  id: 'price',
-  name: 'price',
-  options: [
-    { value: '2000', label: '2000', checked: false },
-    { value: '3000', label: '3000', checked: false },
-    { value: '4000', label: '4000', checked: true },
-    { value: '5000', label: '5000', checked: false },
-  ],
-
-},
-
-{
-  id: 'stock',
-  name: 'Availability',
-  options: [
-    { value: 'in_stock', label: 'Im Stock', checked: false },
-    { value: 'out_of_stock', label: 'Out of Stock', checked: false },
+ function Plist() {
+  const [products, setProducts] = useState([]);
+  const [searchKey, setSearchKey] = useState('');
   
-  ],
-}
-]
+  
+  useEffect(() => {
+    retrieveProducts();
+  }, []);
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+  const retrieveProducts = () => {
+    axios.get('http://localhost:3030/products').then((res) => {
+      if (res.data.success) {
+        setProducts(res.data.existingProducts);
+      }
+    });
+  };
 
-export default function Plist() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const onDelete = (id) => {
+    axios.delete(`http://localhost:3030/product/delete/${id}`).then((res) => {
+      alert('Delete Successfully');
+      retrieveProducts();
+    });
+  };
+
+  const filterData = (products, searchKey) => {
+    const result = products.filter(
+      (product) =>
+      product.ProductName.toLowerCase().includes(searchKey) ||
+      product.Brand.toLowerCase().includes(searchKey) ||
+      product.Category.toLowerCase().includes(searchKey) ||
+      product.Type.toLowerCase().includes(searchKey) ||
+      product.size.toLowerCase().includes(searchKey) 
+    
+    );
+    setProducts(result);
+  };
+
+  const handleSearchArea = (e) => {
+    const searchKey = e.currentTarget.value;
+    axios.get('http://localhost:3030/products').then((res) => {
+      if (res.data.success) {
+        filterData(res.data.existingTickets, searchKey);
+      }
+    });
+    setSearchKey(searchKey);
+  };
+
+ 
+
 
   return (
-    <div className="bg-white">
-      <div>
-        {/* Mobile filter dialog */}
-        <Transition.Root show={mobileFiltersOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
-            <Transition.Child
-              as={Fragment}
-              enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-9 mt-2 mb-2">
+          <h3 className="text-3xl font-bold dark:text-white" style={{ marginLeft: '20px' }}>
+            Product List
+          </h3>
+        </div>
 
-            <div className="fixed inset-0 z-40 flex">
-              <Transition.Child
-                as={Fragment}
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="translate-x-full"
-                enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
-              >
-                <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
-                  <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
-                    <button
-                      type="button"
-                      className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
-                      onClick={() => setMobileFiltersOpen(false)}
-                    >
-                      <span className="sr-only">Close menu</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-
-                  {/* Filters */}
-                  <form className="mt-4 border-t border-gray-200">
-          
-
-                    {filters.map((section) => (
-                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
-                        {({ open }) => (
-                          <>
-                            <h3 className="-mx-2 -my-3 flow-root">
-                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">{section.name}</span>
-                                <span className="ml-6 flex items-center">
-                                  {open ? (
-                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                                  ) : (
-                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                                  )}
-                                </span>
-                              </Disclosure.Button>
-                            </h3>
-                            <Disclosure.Panel className="pt-6">
-                              <div className="space-y-6">
-                                {section.options.map((option, optionIdx) => (
-                                  <div key={option.value} className="flex items-center">
-                                    <input
-                                      id={`filter-mobile-${section.id}-${optionIdx}`}
-                                      name={`${section.id}[]`}
-                                      defaultValue={option.value}
-                                      type="checkbox"
-                                      defaultChecked={option.checked}
-                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                    />
-                                    <label
-                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                      className="ml-3 min-w-0 flex-1 text-gray-500"
-                                    >
-                                      {option.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </Disclosure.Panel>
-                          </>
-                        )}
-                      </Disclosure>
-                    ))}
-                  </form>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition.Root>
-
-        <main className="mx-auto sm:px-6 lg:px-20">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Products</h1>
-
-            <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
-                    <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                  </Menu.Button>
-                </div>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                      {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
-                          {({ active }) => (
-                            <a
-                              href={option.href}
-                              className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm'
-                              )}
-                            >
-                              {option.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
-
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}
-              >
-                <span className="sr-only">Filters</span>
-                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-
-          <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-              {/* Filters */}
-              <form className="hidden lg:block">
-           
-                {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
-                    {({ open }) => (
-                      <>
-                        <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                              ) : (
-                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex items-center">
-                                <input
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
-                                >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
-
-                {singleFilter.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
-                    {({ open }) => (
-                      <>
-                        <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                              ) : (
-                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex items-center">
-                                <input
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
-                                >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
-              </form>
-
-              {/* Product grid */}
-              <div className="lg:col-span-4 w-full">
-                <div className='flex flex-wrap justify-center bg-white py-5'>
-                  {cloth.map((item)=><ProductCard product={item}/>)}
-                </div>
-
-              </div>
-            </div>
-          </section>
-        </main>
+      { /* <div className="col-lg-3 mt-2 mb-3">
+          <input
+            className="form-control"
+            type="search"
+            placeholder="Search"
+            name="searchQuery"
+            value={searchKey}
+            onChange={handleSearchArea}
+          />
+        </div>*/}
       </div>
+   <div  > 
+      <div><center>
+        <h4  class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-2xl dark:text-white">
+       <mark class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500"> Total Products:  {products.length}</mark></h4>
+      </center></div>
+
+<br></br>
+<div  className="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div className="mx-4"> {/* Add margin to the left and right of the table */}
+    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" className="px-6 py-3">
+                    Product Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Brand
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Quantity
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Garment Type
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Description
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Picture URL
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Action
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {products.map((product, index) => (
+                <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="  text-gray-900  dark:text-white text-center ">{product.ProductName}</td>
+                    <td className=" text-center">{product.Brand}</td>
+                    <td className=" text-center">{product.color}</td>
+                    <td className=" text-center">{product.Quantity}</td>
+                    <td className=" text-center">{product.Category}</td>
+                    <td className=" text-center">{product.Type}</td>
+                    <td className=" text-center">{product.size}</td>
+                    <td className=" text-center">{product.Discription}</td>
+                    <td className="">{product.URL}</td>
+                    <td className="">
+                        <a className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                            href="#"
+                            onClick={() => onDelete(product._id)}>Delete</a>
+                    </td>
+                    <td className="px-6 py-4">
+                        <a href={`/pedit/${product._id}`} style={{ textDecoration: 'none' }} className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-red-700 dark:focus:ring-green-900">
+                            Update
+                        </a>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>
+
+
+    <br></br><br></br>
+     
     </div>
-  )
-}
+  </div>   
+</div>      
+
+
+ 
+  
+   )
+ }
+
+ export default Plist;

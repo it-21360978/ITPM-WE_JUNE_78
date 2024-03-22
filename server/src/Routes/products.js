@@ -98,10 +98,10 @@ router.get('/product/:id', (req, res) => {
       });
   });
   
-  //get products for a specific customer
-router.get('/products/:StudentId',(req,res)=>{
-  const StudentId = req.params.StudentId;
-  tickets.find({ StudentId: StudentId })
+  //get products for a specific product
+router.get('/products/:ProductName',(req,res)=>{
+  const ProductId= req.params.ProductId;
+  products.find({ ProductId: ProductId })
   .then((products)=>{
       return res.status(200).json({
           success: true,

@@ -161,7 +161,7 @@ const ProductAdd = () => {
       <div>
         <label htmlFor="quantity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
         <input
-            type="text"
+            type="number"
             id="Quantity"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Quantity"
@@ -174,48 +174,53 @@ const ProductAdd = () => {
       </div>
       <div>
         <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-        <input
+        <select
             type="text"
             id="Category"
+            placeholder="quantity"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Category"
-            placeholder="category"
             value={state.Category}
             onChange={handleInputChange}
-            required
-          />
+            required>
+          <option value="Men">Men</option>
+          <option value="Woamn">Woman</option>
+
+         </select> 
           {errors.Category && <p className="text-red-500">{errors.Category}</p>}
       </div>
       <div>
-        <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-        <input
+        <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Garment Type</label>
+        <select
             type="text"
             id="Type"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="Type"
-            placeholder="type"
             value={state.Type}
             onChange={handleInputChange}
-            required
-          />
+            required>
+          <option value="Top">Top</option>
+          <option value="Lower">Lower</option>
+
+        </select>
           {errors.Type && <p className="text-red-500">{errors.Type}</p>}
       </div>
       <div>
-<label htmlFor="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size </label>
-<select id="visitors" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-  name="size"
-  placeholder="size"
-  value={state.size}
-  onChange={handleInputChange} required>
+          <label htmlFor="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size </label>
+         <select 
+          name="size"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+          value={state.size} 
+          onChange={handleInputChange} required>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+   
 
-  <option value="s">S</option>
-  <option value="m">M</option>
-  <option value="l">L</option>
-  <option value="xl">XL</option>
-
-</select>
-{errors.size && <p className="text-red-500">{errors.size}</p>}
-</div>
+        </select>
+          {errors.size && <p className="text-red-500">{errors.size}</p>}
+     </div>
 
     </div>
 
@@ -257,3 +262,4 @@ const ProductAdd = () => {
   }
 
   export default ProductAdd;
+
