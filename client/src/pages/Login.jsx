@@ -1,24 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import {validateEmail,validatePassword} from '../validations/AuthValidations';
-import {signIn} from '../API/Auth.controller'
+import {signIn} from '../API/Auth.controller';
+import Spinner from '../components/spinner';
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate=useNavigate();
 
   const loginHandler = async (e)=>{
     e.preventDefault();
+    setLoading(true);
 
     const EmailCheck = validateEmail(email);
     const PasswordCheck = validatePassword(password);
 
     if(EmailCheck){
       setError(EmailCheck);
+      setLoading(false);
     }else if(!PasswordCheck) {
       setError(PasswordCheck);
+      setLoading(false);
     } else{
       setError('');
     }
@@ -26,22 +32,17 @@ export default function Login() {
     try {
       const response = await signIn(email,password);
       console.log(response);
+      setLoading(false);
       sessionStorage.setItem('User',JSON.stringify(response));
       setEmail('');
       setPassword('');
       setError('');
-      setSuccess(`Welcome ${response.data.firstName} ${response.data.lastName}`);
-      if(response.status === 200 && response){
-        setSuccess(response.data.message);
-      }else{
-        setError('Something went wrong');
-      }
     } catch (error) {
       console.log(error);
       setError('Something went wrong');
     }
   
-  }
+  };
 
 
   return (
@@ -125,7 +126,7 @@ export default function Login() {
                 type="submit"
                 className="w-full rounded-lg bg-orange-600 hover:bg-orange-700 hover:rounded-full px-4 py-3 text-center text-base font-semibold uppercase text-white shadow-xl ring-gray-500 ring-offset-2 transition focus:ring-2"
               >
-                Log in
+                {loading ? 'loading...' : 'Log in'}
               </button>
             </form>
             <div className="py-12 text-center gap-3">
@@ -141,6 +142,11 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {loading && (
+         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+         <Spinner/>
+       </div>
+      )}
     </div>
   );
 }
