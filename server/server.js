@@ -8,6 +8,7 @@ dotenv.config();
 
 // import defined routes 
 const productRoutes = require('./src/Routes/products');
+const userRoutes = require('./src/Routes/Auth.routes');
 
 // express instance 
 const app = express();
@@ -34,7 +35,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // // using routes 
 // app.use('/api',apiRouter);
-app.use(productRoutes);
+// app.use(productRoutes);
+app.use('/api', userRoutes);
+
 
 
 //default route

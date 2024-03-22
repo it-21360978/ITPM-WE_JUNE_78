@@ -1,46 +1,47 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {validateEmail,validatePassword} from '../validations/AuthValidations';
-import {login} from '../API/Auth.controller'
+import {signIn} from '../API/Auth.controller'
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const loginHandler = async (e)=>{
     e.preventDefault();
 
-    //check email valid or not
-    const emailValidate = validateEmail(email);
-    if(emailValidate){
-      setError(emailValidate);
-      return;
-    }else{
-      setError(null);
-    }
+    const EmailCheck = validateEmail(email);
+    const PasswordCheck = validatePassword(password);
 
-    //check password valid or not
-    const passwordValidate = validatePassword(password);
-    if(!passwordValidate){
-      setError(passwordValidate);
-      return;
-    }else{
-      setError(null);
-    }
-    try{
-      const response = await login(email,password);
-      console.log(response);
-      const {token,data} = response.data;
-      sessionStorage.setItem('userData',JSON.stringify({token,user:data}));
-      
-    }catch(err) {
-      setError(err.message);
+    if(EmailCheck){
+      setError(EmailCheck);
+    }else if(!PasswordCheck) {
+      setError(PasswordCheck);
+    } else{
+      setError('');
     }
     
-
-  };
-
+    try {
+      const response = await signIn(email,password);
+      console.log(response);
+      sessionStorage.setItem('User',JSON.stringify(response));
+      setEmail('');
+      setPassword('');
+      setError('');
+      setSuccess(`Welcome ${response.data.firstName} ${response.data.lastName}`);
+      if(response.status === 200 && response){
+        setSuccess(response.data.message);
+      }else{
+        setError('Something went wrong');
+      }
+    } catch (error) {
+      console.log(error);
+      setError('Something went wrong');
+    }
+  
+  }
 
 
   return (

@@ -43,8 +43,15 @@ export default function Register() {
     try {
       const response = await register(firstName,lastName,email,password);
       console.log(response);
-      if(response.status === 200){
-        setSuccess('Account created successfully');
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setError('');
+      if(response.status === 200 && response){
+        setSuccess(response.data.message);
+       
       }else{
         setError('Something went wrong');
       }
@@ -182,6 +189,7 @@ export default function Register() {
                     <input
                       type="checkbox"
                       checked={acceptTerms}
+                      onChange={handleCheckboxChange}
                       id="Accept"
                       name="accept_terms"
                       className="size-5 rounded-md border-gray-200 bg-white shadow-sm"
