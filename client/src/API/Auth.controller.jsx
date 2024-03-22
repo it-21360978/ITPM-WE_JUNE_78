@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const BASEURL ='http://localhost:3030/api';
+
 //register method
 export const register = async (firstName,lastName,email,password) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/auth/register', { firstName,lastName,email,password });
+        const response = await axios.post(`${BASEURL}/register`, { firstName,lastName,email,password });
         return response.data;
     } catch (error) {
         throw new Error(error.response.data.message || 'Something went wrong');
@@ -12,9 +14,9 @@ export const register = async (firstName,lastName,email,password) => {
 
 
 //login method
-export const login = async (email, password) => {
+export const signIn = async (email, password) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+        const response = await axios.post(`${BASEURL}/login`, { email, password });
         return response.data;
     } catch (error) {
         throw new Error(error.response.data.message || 'Something went wrong');
