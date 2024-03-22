@@ -1,17 +1,20 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
-
 
 const ProductAdd = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [state, setState] = useState({
-    StudentId: '',
-    subject: '',
-    issueDate: '',
-    details: ''
+    ProductName:'',
+    Brand: '',
+    color: '',
+    Quantity: '',
+    Category: '',
+    Type: '',
+    size: '',
+    Description: '',
+    URL: ''
   });
 
   const handleInputChange = (e) => {
@@ -20,65 +23,83 @@ const ProductAdd = () => {
       ...prevState,
       [name]: value
     }));
-    // Clear specific error message
-  setErrors((prevErrors) => ({
-    ...prevErrors,
-    [name]: ''
+    // Clear all errors on input change
+    setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: ''
   }));
 };
 
   const validateForm = () => {
     const newErrors = {};
-  
-    // Validate StudentId
-    if (!state.StudentId) {
-      newErrors.StudentId = "Student Id is required";
+
+    // Validate all fields
+    if (!state.ProductName) {
+      newErrors.ProductName = "Product Name is required";
     }
-  
-    // Validate subject
-    if (!state.subject) {
-      newErrors.subject = "Subject is required";
+    if (!state.Brand) {
+      newErrors.Brand = "Brand is required";
     }
-  
-    // Validate issueDate
-    if (!state.issueDate) {
-      newErrors.issueDate = "Issue Date is required";
+    if (!state.color) {
+      newErrors.color = "Color is required";
     }
-  
-    // Validate details
-    if (!state.details) {
-      newErrors.details = "Details are required";
+    if (!state.Quantity) {
+      newErrors.Quantity = "Quantity is required";
     }
-  
+    if (!state.Category) {
+      newErrors.Category = "Category is required";
+    }
+    if (!state.Type) {
+      newErrors.Type = "Type is required";
+    }
+    if (!state.size) {
+      newErrors.size = "Size is required";
+    }
+    if (!state.Description) {
+      newErrors.Description = "Description is required";
+    }
+    if (!state.URL) {
+      newErrors.URL = "URL is required";
+    }
+
     setErrors(newErrors);
-  
+
     // Return true if there are no errors
     return Object.keys(newErrors).length === 0;
   };
-  
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-    const { StudentId, subject, issueDate, details } = state;
-    const data = {
-      StudentId,
-      subject,
-      issueDate,
-      details
-    };
-    axios.post('http://localhost:9090/ticket/save', data)
+      const { ProductName, Brand, color, Quantity, Category, Type, size, Description, URL} = state;
+      const data = {
+        ProductName,
+        Brand,
+        color,
+        Quantity,
+        Category,
+        Type,
+        size,
+        Description,
+        URL
+      };
+      axios.post("http://localhost:3030/product/save", data)
       .then((res) => {
         if (res.data.success) {
-          alert("Ticket Added Successfully");
+          alert("Product Added Successfully");
           setState({
-            StudentId: '',
-            subject: '',
-            issueDate: '',
-            details: ''
+            ProductName:'',
+            Brand: '',
+            color: '',
+            Quantity: '',
+            Category: '',
+            Type: '',
+            size: '',
+            Description: '',
+            URL: ''
             
           });
-          navigate('/Stickets');
+          navigate('/plist');
         }
       })
     }
@@ -93,68 +114,138 @@ const ProductAdd = () => {
  </h2>
 
 <div className="mx-auto max-auto px-8  ">
-  <form>
+  <form >
     <div className="grid gap-6 mb-6 md:grid-cols-2">
       <div>
         <label htmlFor="product name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
         <input
             type="text"
-            id="StudentId"
+            id="ProductName"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="StudentId"
-            placeholder="Enter Student id"
-            value={state.StudentId}
+            name="ProductName"
+            placeholder="ProductName"
+            value={state.ProductName}
             onChange={handleInputChange}
             required
           />
-          {errors.StudentId && <p className="text-red-500">{errors.StudentId}</p>}
+          {errors.ProductName && <p className="text-red-500">{errors.ProductName}</p>}
       </div>
       <div>
         <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-        <input type="text" id="brand" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="brand" required />
+        <input
+            type="text"
+            id="Brand"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="Brand"
+            placeholder="brand"
+            value={state.Brand}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.Brand && <p className="text-red-500">{errors.Brand}</p>}
       </div>
       <div>
         <label htmlFor="color" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Colour</label>
-        <input type="text" id="color" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="color" required />
+        <input
+            type="text"
+            id="color"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="color"
+            placeholder="color"
+            value={state.color}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.color && <p className="text-red-500">{errors.color}</p>}
       </div>
       <div>
         <label htmlFor="quantity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-        <input type="text" id="quentity" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="quantity"  required />
+        <input
+            type="text"
+            id="Quantity"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="Quantity"
+            placeholder="quantity"
+            value={state.Quantity}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.Quantity && <p className="text-red-500">{errors.Quantity}</p>}
       </div>
       <div>
         <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-        <input type="text" id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="men/woman/child" required />
+        <input
+            type="text"
+            id="Category"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="Category"
+            placeholder="category"
+            value={state.Category}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.Category && <p className="text-red-500">{errors.Category}</p>}
       </div>
       <div>
         <label htmlFor="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-        <input type="text" id="type" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="upper/lower" required />
+        <input
+            type="text"
+            id="Type"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="Type"
+            placeholder="type"
+            value={state.Type}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.Type && <p className="text-red-500">{errors.Type}</p>}
       </div>
       <div>
 <label htmlFor="visitors" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size </label>
-<select id="visitors" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+<select id="visitors" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  name="size"
+  placeholder="size"
+  value={state.size}
+  onChange={handleInputChange} required>
+
   <option value="s">S</option>
   <option value="m">M</option>
   <option value="l">L</option>
   <option value="xl">XL</option>
 
 </select>
+{errors.size && <p className="text-red-500">{errors.size}</p>}
 </div>
 
     </div>
 
     <div>
             <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-            <textarea id="description" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Product information here" required />
+            <textarea id="Description" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            name="Description"
+            placeholder="Enter Product  Details here"
+            value={state.Description}
+            onChange={handleInputChange} required></textarea>
+            {errors.Description && <p className="text-red-500">{errors.Description}</p>}
      </div>
     <div className="mb-6">
       <label htmlFor="url" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Picture URL</label>
-      <input type="url" id="url" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+      <input
+            type="text"
+            id="URL"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="URL"
+            placeholder="picture url"
+            value={state.URL}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.URL && <p className="text-red-500">{errors.URL}</p>}
     </div>
 
     <div className="flex justify-center">
-<button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-20 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-  Submit
-</button>
+    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-20 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+  onClick={onSubmit}>Submit</button>
     </div>
 
 

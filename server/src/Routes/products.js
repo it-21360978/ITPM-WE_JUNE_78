@@ -3,7 +3,7 @@ const products = require('../models/products');
 
 const router = express.Router();
 
-//save tickets
+//save Products
 
 router.post('/product/save',(req,res)=>{
 
@@ -79,7 +79,7 @@ router.delete('/product/delete/:id',(req,res)=>{
 });
 
 
-//get a specific ticket
+//get a specific product
 router.get('/product/:id', (req, res) => {
     let productId = req.params.id;
   
@@ -98,7 +98,7 @@ router.get('/product/:id', (req, res) => {
       });
   });
   
-  //get products for a specific student
+  //get products for a specific customer
 router.get('/products/:StudentId',(req,res)=>{
   const StudentId = req.params.StudentId;
   tickets.find({ StudentId: StudentId })

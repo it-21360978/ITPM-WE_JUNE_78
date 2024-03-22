@@ -2,43 +2,62 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
 
   
-  StudentId: {
+  ProductName: {
     type: String,
     required: true,
     default: "",
   },
   
-  subject: {
+  Brand: {
     type: String,
-    maxlength: 100,
     required: true,
     default: "",
   },
-  openAt: {
-    type: Date,
-    required: true,
-    default: Date.now(),
-  },
-  status: {
+
+  color: {
     type: String,
-    maxlength: 30,
     required: true,
-    default: "Pending operator response",
+    default: "",
   },
 
-  details: {
+  Quantity: {
     type: String,
-    maxlength: 30,
+    required: true,
+    default: "",
+  },
+
+  Category: {
+    type: String,
    required: true,
     default: "",
   },
 
-  message: {
+  Type: {
     type: String,
-    maxlength: 30,
    required: true,
-    default: "no message",
+    default: "",
   },
+
+  size: {
+    type: String,
+    enum: ['S', 'M', 'L','XL'], // Add your size options here
+    required: true,
+    default:"",
+  },
+
+  Description: {
+    type: String,
+   required: true,
+    default: "",
+  },
+
+  URL: {
+    type: String,
+   required: true,
+    default: "",
+  },
+
+
 
 });
 
