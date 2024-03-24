@@ -75,11 +75,20 @@ const validateConfirmPassword = (password, confirmPassword) => {
 }
 
 
+//terms and conditions validation
+ const validateTermsAcceptance = (acceptTerms) => {
+    if (!acceptTerms) {
+      return "Please accept the terms and conditions.";
+    }
+    return null; 
+  };
+
 export {
     validateEmail,
     validatePassword,
     validateFirstName,
     validateLastName,
     validatePhoto,
-    validateConfirmPassword
+    validateConfirmPassword,
+    validateTermsAcceptance
 };

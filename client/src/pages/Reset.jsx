@@ -1,46 +1,59 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import {resetPassword} from '../API/Auth.controller'
-import {validatePassword,validateConfirmPassword} from '../validations/AuthValidations'
-
+import {validatePassword,validateConfirmPassword} from '../validations/AuthValidations';
+import Alert from '@mui/material/Alert';
+import Spinner from '../components/spinner';
 
 export default function Reset() {
-
+  const { token } = useParams();
+  const navigate = useNavigate(); 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading,setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const resetHandler = async(e)=>{
     e.preventDefault();
+    setLoading(true);
 
     const PasswordError = validatePassword(password);
     const ConfirmPasswordError = validateConfirmPassword(password,confirmPassword);
    
     //check password
-    if(PasswordError){
-      setError(PasswordError);
+    if(PasswordError || ConfirmPasswordError){
+      setError(PasswordError || ConfirmPasswordError);
+      setLoading(false);
       return;
     }else{
       setError('');
     }
 
-    //check confirm password
-    if (ConfirmPasswordError) {
-      setError(ConfirmPasswordError);
-      return;
-    } else {
-      setError('');
-    }
+
     try {
       const response = await resetPassword(token, password);
+      setPassword('');
+      setConfirmPassword('')
+      setError('');
+      setLoading(false);
       setSuccess(response.message);
+      setShowModal(true);
     } catch (error) {
       setError(error.message);
-    }
+      setTimeout(() => {
+        setError('')
+      }, 3000);
   
   }
+  }
 
-
+  //success model handler
+  const handleCloseModal = () => {
+    setShowModal(false);
+    navigate('/login');
+  };
 
 
   return (
@@ -53,6 +66,10 @@ export default function Reset() {
       {/* Card Content */}
       <div className="h-full flex justify-center items-center ">
         <div className="rounded-xl border border-gray-200 bg-white shadow-xl p-5 z-10 lg:w-2/6">
+           {/** alert msg */}
+           <div className=" flex items-center justify-center py-2">
+          {error && <Alert variant="outlined" severity="error"className=" text-sm">{error}</Alert>}
+          </div>
         <h5 className="block text-sm font-sans font-bold text-orange-600 text-center">Envough</h5>
           <div className="p-4 sm:p-7">
             <div className="text-center">
@@ -84,7 +101,7 @@ export default function Reset() {
                   </div>
                   {/* /Form Group */}
 
-                  <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-md border border-transparent bg-orange-600 py-3 px-4 text-sm font-semibold text-white transition-all hover:bg-orange-700 hover:rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 shadow-md uppercase">Add new password</button>
+                  <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-md border border-transparent bg-orange-600 py-3 px-4 text-sm font-semibold text-white transition-all hover:bg-orange-700 hover:rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 shadow-md uppercase">{loading ? 'loading...': 'Add new password'}</button>
                 </div>
               </form>
               {/* /Form */}
@@ -97,6 +114,20 @@ export default function Reset() {
           </p>
         </div>
       </div>
+      {loading && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <Spinner/>
+        </div>
+      )}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="bg-white p-8 rounded-lg shadow-xl">
+            <h2 className="text-2xl font-bold mb-4">Success!</h2>
+            <p className="text-lg">{success}</p>
+            <button onClick={handleCloseModal} className="mt-4 px-4 py-1 float-right bg-orange-500 text-white rounded-md hover:bg-orange-600">Close</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

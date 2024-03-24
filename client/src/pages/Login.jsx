@@ -3,6 +3,8 @@ import { Link ,useNavigate } from "react-router-dom";
 import {validateEmail,validatePassword} from '../validations/AuthValidations';
 import {signIn} from '../API/Auth.controller';
 import Spinner from '../components/spinner';
+import Alert from '@mui/material/Alert';
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,27 +21,47 @@ export default function Login() {
     const EmailCheck = validateEmail(email);
     const PasswordCheck = validatePassword(password);
 
-    if(EmailCheck){
-      setError(EmailCheck);
+    if (EmailCheck || PasswordCheck) {
+      setError(EmailCheck || PasswordCheck);
       setLoading(false);
-    }else if(!PasswordCheck) {
-      setError(PasswordCheck);
-      setLoading(false);
-    } else{
+    } else {
       setError('');
     }
     
     try {
       const response = await signIn(email,password);
-      console.log(response);
-      setLoading(false);
-      sessionStorage.setItem('User',JSON.stringify(response));
-      setEmail('');
-      setPassword('');
-      setError('');
+      setLoading(true)
+      setTimeout(() => {
+    
+        // Update state with response data
+        sessionStorage.setItem('User', JSON.stringify(response));
+        setEmail('');
+        setPassword('');
+        setError('');
+        setSuccess('Login successful'); 
+        setLoading(false);
+        //check the user role and navigate to relavant page
+        if (response && response.role) {
+          const role = response.role;
+          console.log('User role:', role);
+          if (role === 'user') {
+            console.log('Navigating to user dashboard...');
+            navigate('/user-dashboard');
+          } else if (role === 'admin') {
+            console.log('Navigating to admin dashboard...');
+            navigate('/admin-dashboard');
+          } 
+        } 
+        console.log(response);
+      }, 5000);
+
     } catch (error) {
       console.log(error);
-      setError('Something went wrong');
+      setError(error.message);
+      setLoading(false);
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
   
   };
@@ -65,6 +87,11 @@ export default function Login() {
           />
         </div>
         <div className="flex w-full flex-col md:w-1/2">
+          <div className=" flex items-center justify-center py-2">
+          {error && <Alert variant="outlined" severity="error"className=" text-sm">{error}</Alert>}
+          {success && <Alert variant="outlined" severity="success" className=" text-sm">{success}</Alert>}
+          </div>
+       
           <div className="flex justify-center pt-12 md:-mb-24  md:pl-12">
             <a
               href="#"
@@ -119,7 +146,7 @@ export default function Login() {
                   />
                 </div>
               </div>
-            <Link to= '/forgot-password'> <button className=" flex float-right mx-auto mr-2 text text-sm mb-12 text-orange-700 hover:underline">
+            <Link to= '/forgot-password'> <button className=" flex float-right mx-auto mr-2 text text-sm mb-10 mt-4 text-orange-700 hover:underline">
                 forgot Password ?
               </button></Link> 
               <button
