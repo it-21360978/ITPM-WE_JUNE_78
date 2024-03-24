@@ -1,7 +1,9 @@
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
-import {validateFirstName,validateLastName,validateEmail,validatePassword,validateConfirmPassword} from '../validations/AuthValidations';
+import {validateFirstName,validateLastName,validateEmail,validatePassword,validateConfirmPassword,validateTermsAcceptance} from '../validations/AuthValidations';
 import {register} from '../API/Auth.controller';
+import Spinner from '../components/spinner';
+import Alert from '@mui/material/Alert';
 
 export default function Register() {
 
@@ -13,54 +15,64 @@ export default function Register() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [error,setError] = useState('');
   const [success,setSuccess] = useState('');
+  const [loading,setLoading] = useState(false);
 
 
   const registerHandler = async (req,res)=>{
     req.preventDefault();
+    setLoading(true);
+
     const firstNameCheck = validateFirstName(firstName);
     const lastNameCheck = validateLastName(lastName);
     const emailCheck = validateEmail(email);
     const passwordCheck = validatePassword(password);
     const confirmPasswordCheck = validateConfirmPassword(password,confirmPassword);
+    const termsCheck = validateTermsAcceptance(acceptTerms);
 
-    if(firstNameCheck){
-      setError(firstNameCheck);
-    }else if(lastNameCheck){
-      setError(lastNameCheck);
-    }else if(emailCheck){
-      setError(emailCheck);
-    }else if(passwordCheck){
-      setError(passwordCheck);
-    }else if(confirmPasswordCheck){
-      setError(confirmPasswordCheck);
-    }else if(!acceptTerms){
-      setError('Please accept the terms and conditions');
-    } 
-    else{
+    if(firstNameCheck || lastNameCheck || emailCheck || passwordCheck || confirmPasswordCheck || termsCheck){
+      setError(firstNameCheck || lastNameCheck || emailCheck || passwordCheck || confirmPasswordCheck || termsCheck);
+      setLoading(false);
+      return;
+    }else{
       setError('');
     }
 
     try {
       const response = await register(firstName,lastName,email,password);
-      console.log(response);
+      setLoading(true);
+
+      //time out to get response
+      setTimeout(() => {
       setFirstName('');
       setLastName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
-      setError('');
-      if(response.status === 200 && response){
-        setSuccess(response.data.message);
-       
-      }else{
-        setError('Something went wrong');
-      }
+      setAcceptTerms(false);
+      console.log(response);
+      setLoading(false);
+      setSuccess("Account created successfully!");
+      setError('')
+      }, 5000);
+     
+      //after showing success dissapear
+      setTimeout(() => {
+        setSuccess('');
+      }, 3000);
+
     } catch (error) {
       console.log(error);
-      setError('Something went wrong');
+      setError(error.message);
+      setLoading(false);
+      //after error show dissapear
+      setTimeout(() => {
+        setError('')
+      }, 3000);
     }
   }
 
+
+  //terms check handler
   const handleCheckboxChange = () => {
     setAcceptTerms(!acceptTerms); 
   }
@@ -80,6 +92,13 @@ export default function Register() {
 
           <main className="flex items-center justify-center px-8 py-5 sm:px-12 lg:col-span-7 lg:px-16 lg:py-10 xl:col-span-6">
             <div className="max-w-xl lg:max-w-3xl">
+
+            {/** alert msg */}
+            <div className=" flex items-center justify-center py-2">
+          {error && <Alert variant="outlined" severity="error"className=" text-sm">{error}</Alert>}
+          {success && <Alert variant="outlined" severity="success" className=" text-sm">{success}</Alert>}
+          </div>
+
               <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
                 Welcome to{" "}
                 <span className=" font-bold text-orange-600 "> Envough </span>
@@ -212,7 +231,7 @@ export default function Register() {
 
                 <div className="col-span-6 sm:flex sm:items-center gap-6 mt-4">
                   <button type="submit" className="inline-block shrink-0 rounded-md border border-gray-600 bg-orange-600 shadow-lg px-16 py-3 text-sm font-medium text-white transition  hover:bg-orange-700 hover:rounded-full  focus:outline-none focus:ring active:text-orange-500 uppercase">
-                    Create an account
+                   {loading ? 'Loading....' : 'Create an account'}
                   </button>
 
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">
@@ -228,6 +247,11 @@ export default function Register() {
           </main>
         </div>
       </section>
+      {loading && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <Spinner/>
+        </div>
+      )}
     </div>
   );
 }

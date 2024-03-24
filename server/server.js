@@ -25,7 +25,10 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // app.use('/uploads', express.static('uploads'));
 
 //enable cors
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true, 
+  }));
 // parse json data
 app.use(express.json());
 app.use(bodyParser.json());

@@ -27,7 +27,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPW />} />
-          <Route path="/reset-password" element={<Reset />} />
+          <Route path="/reset/:token" element={<Reset />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/add" element={<ProductAdd />} />
           <Route path="/plist" exact element={<Plist/>} />

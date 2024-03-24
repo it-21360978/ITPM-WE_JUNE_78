@@ -36,12 +36,15 @@ exports.register = async(req,res) => {
             from: process.env.MAIL,
             to: user.email,
             subject: 'Registration Successful',
-            html:`
-                <h1>Hey ${firstName} , Welcome to the Envough Company </h1>
-                <p>Your registration was successful</p>
-                <p>Best Regards ,</p>
-                <p>Envough Team</p>
-            `,
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img src="https://example.com/path/to/your/logo.png" alt="Envough Textiles Logo" style="display: block; margin: 0 auto; max-width: 200px; height: auto; margin-bottom: 20px;">
+                    <h1 style="color: #333333; font-size: 24px; margin-bottom: 20px;">Hey ${firstName}, Welcome to Envough Textiles</h1>
+                    <p style="color: #666666; font-size: 16px; margin-bottom: 15px;">Your registration was successful. We're thrilled to have you on board!</p>
+                    <p style="color: #666666; font-size: 16px; margin-bottom: 15px;">Best Regards,</p>
+                    <p style="color: #666666; font-size: 16px; margin-bottom: 15px;">Envough Team</p>
+                </div>
+            `
         });
 
         res.status(200).json({
@@ -155,5 +158,93 @@ exports.DeleteUser = async(req,res) =>{
         res.status(200).json({message:'User deleted successfully'});
     }catch(err){
         res.status(500).json({message:'internal server error',err});
+    }
+};
+
+
+//get all users
+exports.GetUsers = async(req,res) =>{
+    try{
+        const users = await UserModel.find();
+        res.status(200).json(users);
+    }catch(err){
+        res.status(500).json({message:'internal server error',err});
+    }
+};
+
+//get single user by id and update
+
+
+
+
+//reset password
+exports.resetPassword = async (req,res) =>{
+    const {token} = req.params;
+    const {password} = req.body;
+
+    try {
+        //veryfy token
+        const decodeToken = await AuthService.verifyToken(token);
+        console.log('decoded token:', decodeToken);
+
+        //if token not verify
+        if(!decodeToken) throw new Error('Invalid or expired token');
+       
+        //update the password in database
+        const userId = decodeToken.id;
+        const hashedPassword = await AuthService.hashPassword(password);
+
+        await UserModel.findByIdAndUpdate(userId,{password:hashedPassword});
+       
+        //get updated details 
+        const updatedUser = await UserModel.findById(userId);
+        res.status(200).json({message:'Password updated successfully',data:updatedUser});
+        
+
+    } catch (error) {
+        console.error('token verify error', error);
+        res.status(500).json({message:'internal server error',error});
+        
+    }
+};
+
+
+
+//forgot password
+exports.forgotPassword = async(req, res) => {
+    try {
+        const {email} = req.body;
+        const user = await UserModel.findOne({ email });
+
+        //check user from db
+        if (!user) throw new Error('User not found');
+        
+        //generate random reset token
+        const token = await AuthService.generateToken(user);
+        //send mail with token
+        await sendMail({
+            from: process.env.MAIL,
+            to: user.email,
+            subject: 'Reset Password',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <img src="https://example.com/path/to/your/logo.png" alt="Envough Textiles Logo" style="display: block; margin: 0 auto; max-width: 200px; height: auto; margin-bottom: 20px;">
+                    <h1 style="color: #333333; font-size: 24px; margin-bottom: 20px;">Hey ${user.firstName}, Reset Your Password</h1>
+                    <p style="color: #666666; font-size: 16px; margin-bottom: 15px;">Click the link below to reset your password</p>
+                    <a href="http://localhost:5173/reset/${token}" style="display: inline-block; padding: 10px 20px; background-color: #333333; color: #ffffff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                    <p style="color: #666666; font-size: 16px; margin-bottom: 15px;">Best Regards,</p>
+                    <p style="color: #666666; font-size: 16px; margin-bottom: 15px;">Envough Team</p>
+                </div>
+            `
+        });
+        res.status(200).json({
+            token,
+            message: 'Reset link sent to email'
+        });
+    
+    } catch (error) {
+        console.error('forgot password error:', error);
+        res.status(500).json({message:'internal server error',error});
+        
     }
 };
