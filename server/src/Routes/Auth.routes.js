@@ -11,6 +11,7 @@ router.route('/login').post(AuthController.Login);
 router.route('/logout').get(AuthController.Logout);
 router.route('/forgot').post(AuthController.forgotPassword);
 router.route('/reset/:token').post(AuthController.resetPassword);
+// router.route('/auth/google').post(AuthController.googleLogin);
 
 
 module.exports = router;
