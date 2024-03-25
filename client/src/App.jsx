@@ -7,15 +7,22 @@ import {
 } from "react-router-dom";
 
 // Importing Components
+//importing authentication management
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPW from './pages/ForgotPW';
 import Reset from './pages/Reset';
+import AdminDashboard from './pages/AdminDashboard';
+import UserDashboard from './pages/userDashboard';
+
+// Importing product management
 import ProductAdd from './pages/ProductAdd';
 import Plist from "./pages/productlist";
 import ProductView from "./pages/productView";
 import ProductEdit from './pages/ProductEdit';
 import Pfilter from './pages/ProductFilter';
+
+
 
 
 
@@ -28,6 +35,9 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPW />} />
           <Route path="/reset/:token" element={<Reset />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
+
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/add" element={<ProductAdd />} />
           <Route path="/plist" exact element={<Plist/>} />

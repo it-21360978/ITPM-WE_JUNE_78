@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import {validateFirstName,validateLastName,validateEmail,validatePassword,validateConfirmPassword,validateTermsAcceptance} from '../validations/AuthValidations';
 import {register} from '../API/Auth.controller';
 import Spinner from '../components/spinner';
@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert';
 
 export default function Register() {
 
+  const navigate = useNavigate();
   const [firstName,setFirstName] = useState('');
   const [lastName,setLastName] = useState('');
   const [email,setEmail] = useState('');
@@ -52,13 +53,17 @@ export default function Register() {
       console.log(response);
       setLoading(false);
       setSuccess("Account created successfully!");
-      setError('')
-      }, 5000);
      
       //after showing success dissapear
       setTimeout(() => {
         setSuccess('');
-      }, 3000);
+        navigate('/login');
+      }, 5000);
+
+      setError('')
+      }, 5000);
+     
+      
 
     } catch (error) {
       console.log(error);

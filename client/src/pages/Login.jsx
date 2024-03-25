@@ -49,7 +49,7 @@ export default function Login() {
             navigate('/user-dashboard');
           } else if (role === 'admin') {
             console.log('Navigating to admin dashboard...');
-            navigate('/admin-dashboard');
+            navigate('/admin');
           } 
         } 
         console.log(response);

@@ -8,7 +8,12 @@ export const register = async (firstName,lastName,email,password) => {
         const response = await axios.post(`${BASEURL}/register`, { firstName,lastName,email,password });
         return response.data;
     } catch (error) {
-        throw new Error(error.response.data.message || 'Something went wrong');
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
     }
 }
 
@@ -19,7 +24,12 @@ export const signIn = async (email, password) => {
         const response = await axios.post(`${BASEURL}/login`, { email, password });
         return response.data;
     } catch (error) {
-        throw new Error(error.response.data.message || 'Something went wrong');
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
     }
 }
 
@@ -29,7 +39,12 @@ export const logout = async () => {
         const response = await axios.get(`${BASEURL}/logout`);
         return response.data;
     } catch (error) {
-        throw new Error(error.response.data.message || 'Something went wrong');
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
     }
 }
 
@@ -56,6 +71,11 @@ export const resetPassword = async (token, password) => {
         const response = await axios.post(`${BASEURL}/reset/${token}`, { password });
         return response.data;
     } catch (error) {
-        throw new Error(error.response.data.message || 'Something went wrong');
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
     }
 }

@@ -5,6 +5,47 @@ const fs = require('fs');
 const cloudinary = require('../utils/Cloudinary');
 const {validateFirstName,validateLastName,validateEmail,validatePassword} = require('../Validations/auth.validator');
 
+// //google auth
+// const { OAuth2Client } = require('google-auth-library');
+// const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// //google login
+// exports.googleLogin = async (req,res) => {
+//     const { token } = req.body;
+
+//     try {
+//         const ticket = await client.verifyIdToken({
+//             idToken: token,
+//             audience: process.env.GOOGLE_CLIENT_ID,
+//         });
+//         const { email, given_name, family_name, picture } = ticket.getPayload();
+
+//         // Check if the user already exists in the database
+//         let user = await UserModel.findOne({ email });
+
+//         if (!user) {
+//             // If the user doesn't exist, create a new user
+//             user = new UserModel({
+//                 firstName: given_name,
+//                 lastName: family_name,
+//                 email,
+//                 profileImage: picture,
+//                 role: 'user', // Set role as 'user'
+//                 // Add other properties as needed
+//             });
+//             await user.save();
+//         }
+
+//         // Generate JWT token
+//         const jwtToken = await AuthService.generateToken(user);
+
+//         res.status(200).json({ token: jwtToken, user });
+//     } catch (err) {
+//         console.error('Google authentication error:', err);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
+
 
 //post method
 exports.register = async(req,res) => {
