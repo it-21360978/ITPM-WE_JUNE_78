@@ -4,6 +4,7 @@ const {sendMail} = require('../Helpers/MailService');
 const fs = require('fs');
 const cloudinary = require('../utils/Cloudinary');
 const {validateFirstName,validateLastName,validateEmail,validatePassword} = require('../Validations/auth.validator');
+const{userUpload} = require('../Middlewares/User.Image');
 
 // //google auth
 // const { OAuth2Client } = require('google-auth-library');
@@ -143,43 +144,57 @@ exports.Logout=async (req,res)=>{
 
 
 //update user profile
-exports.UpdateProfile = async (req,res) =>{
-    try{
+exports.UpdateProfile = async (req, res) => {
+    try {
         const { id } = req.params;
-        const {firstName,lastName,email} = req.body;
+        const { firstName, lastName, email, about, address, phone, city, country, zip } = req.body;
 
-        //check imagePath in body
+        // Check if file was uploaded
         let imagePath = req.file ? req.file.path : null;
 
-        //find the user 
+        // Find the user 
         const user = await UserModel.findById(id);
-        if (!user) throw new Error ('User not found');
+        if (!user) throw new Error('User not found');
 
-        //delete the image if user already uploaded
-        if(user.cloudinary_id){
+        // Delete the image if user already uploaded
+        if (user.cloudinary_id) {
             await cloudinary.uploader.destroy(user.cloudinary_id);
         }
-        //update the user 
+
+        // Upload image to Cloudinary if imagePath exists
+        let uploadedImage;
+        if (imagePath) {
+            uploadedImage = await cloudinary.uploader.upload(imagePath, { folder: 'user' });
+        }
+
+        // Update the user 
         const updatedUser = {
             firstName: firstName || user.firstName,
             lastName: lastName || user.lastName,
             email: email || user.email,
-            imagePath: imagePath || user.imagePath,
-            cloudinary_id: imagePath ? null : user.cloudinary_id
+            about: about || user.about,
+            address: address || user.address,
+            phone: phone || user.phone,
+            city: city || user.city,
+            country: country || user.country,
+            zip: zip || user.zip,
+            imagePath: uploadedImage ? uploadedImage.secure_url : user.imagePath,
+            cloudinary_id: uploadedImage ? uploadedImage.public_id : user.cloudinary_id
         };
-        const result = await UserModel.findByIdAndUpdate(id ,updatedUser ,{new:true});
+        const result = await UserModel.findByIdAndUpdate(id, updatedUser, { new: true });
 
-        //delete local storage file
-        if(req.file) {
+        // Delete local storage file
+        if (req.file) {
             fs.unlinkSync(req.file.path);
         }
 
-        res.status(200).json({message:'User updated successfully',data:result});
-        
-    }catch(err){
-        res.status(500).json({message:'internal server error',err});
+        res.status(200).json({ message: 'User updated successfully', data: result });
+
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err });
     }
 };
+
 
 
 //delete user 
@@ -214,6 +229,15 @@ exports.GetUsers = async(req,res) =>{
 };
 
 //get single user by id and update
+exports.getUser = async(req,res) =>{
+    try{
+        const {id} = req.params;
+        const user = await UserModel.findById(id);
+        res.status(200).json(user);
+    }catch(err){
+        res.status(500).json({message:'internal server error',err});
+    }
+};
 
 
 

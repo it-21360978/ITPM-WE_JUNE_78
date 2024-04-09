@@ -79,3 +79,67 @@ export const resetPassword = async (token, password) => {
         }
     }
 }
+
+//update user Details
+export const updateUser = async (user) => {
+    try {
+        const response = await axios.put(`${BASEURL}/update`, user);
+        return response.data;
+    } catch (error) {
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }
+}
+
+//get user details by id
+export const getUser = async (userId) => {
+    try {
+        const response = await axios.get(`${BASEURL}/user/${userId}`);
+        return response.data;
+    } catch (error) {
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }
+}
+
+//delete User by id
+export const deleteUser = async (userId) => {
+    try {
+        const response = await axios.delete(`${BASEURL}/user/${userId}`);
+        return response.data;
+    } catch (error) {
+        // throw new Error(error.response.data.message || 'Something went wrong');
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }
+}
+
+//update user data by id
+export const updateUserById = async (userId, formData) => {
+    try {
+        const response = await axios.put(`${BASEURL}/user/${userId}/update`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Set content type to multipart form data
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+        } else {
+            throw new Error('Something went wrong');
+        }
+    }
+};

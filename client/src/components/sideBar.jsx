@@ -1,5 +1,6 @@
-import React ,{useState} from 'react';
+import React ,{useState,useEffect} from 'react';
 import { Link } from "react-router-dom";
+import EditUser from './editUser';
 
 export default function sideBar() {
 
@@ -7,6 +8,12 @@ export default function sideBar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [selectedContent, setSelectedContent] = useState("Dashboard");
     const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const [userData, setUserData] = useState([]);
+    const [fName, setFName] = useState('');
+    const [lName, setLName] = useState('');
+    const [email, setEmail] = useState('');
+    const [id, setId] = useState('');
+    const [image, setImage] = useState('');
   
     const toggleSidebar = () => {
       setSidebarOpen((prevState) => !prevState);
@@ -19,6 +26,19 @@ export default function sideBar() {
     const handleSidebarItemClick = (item) => {
       setSelectedContent(item);
     };
+
+
+    useEffect(() => {
+      const user = JSON.parse(sessionStorage.getItem('User'));
+      if (user) {
+        setUserData(user);
+        setFName(user.firstName);
+        setLName(user.lastName);
+        setEmail(user.email);
+        setId(user._id);
+        setImage(user.imagePath);
+      }
+    }, []);
   
     return (
       <>
@@ -70,24 +90,13 @@ export default function sideBar() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="w-8 h-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1463453091185-61582044d556?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      src={image}
                       alt="user photo"
                     />
                   </button>
                   {userMenuOpen && (
                     <div className="absolute right-0 mt-5 w-48 py-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                      >
-                        Your Profile
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                      >
-                        Settings
-                      </a>
+                      
                       <a
                         href="#"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
@@ -136,13 +145,32 @@ export default function sideBar() {
               >
                 <Link to=''>Stock</Link>
               </li>
+              <li
+                className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "Profile" ? 'text-black bg-gray-100' : ''}`}
+                onClick={() => handleSidebarItemClick("Profile")}
+              >
+                <Link to=''>Profile</Link>
+              </li>
             </ul>
 
             
 
 
 
+             {/* User Div */}
 
+       
+    <div className="absolute bottom-0 left-0 w-full pb-8 mx-2 pt-6 flex justify-start items-center space-x-2">
+      <div className=' bg-slate-700 flex p-5 rounded-xl gap-4 border-white'>
+      <div>
+        <img src={image} alt="avatar"className='w-10 h-10 rounded-full' />
+      </div>
+      <div className="flex flex-col justify-start items-start space-y-1">
+        <p className="cursor-pointer text-base leading-4 text-white">{fName} {lName}</p>
+        <p className="cursor-pointer text-xs leading-3 text-indigo-200">{email}</p>
+      </div>
+    </div>
+    </div>
 
 
           </div>
@@ -175,6 +203,13 @@ export default function sideBar() {
             <div>
               {/* stock component */}
               <h2>Stock Component</h2>
+            </div>
+          )}
+          {selectedContent === "Profile" && (
+            <div>
+              {/* Profile component */}
+              <EditUser userId={id}/>
+             
             </div>
           )}
         </div>
