@@ -1,7 +1,7 @@
 import React ,{useState ,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import EditUser from './editUser';
-
+import {logout} from '../API/Auth.controller';
 
 export default function userSideBar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -41,6 +41,18 @@ export default function userSideBar() {
     
 
     
+    const logoutHandler = async (e)=>{
+      e.preventDefault();
+      try{
+        const res = await logout();
+        sessionStorage.removeItem('User');
+        console.log(res);
+        window.location.href = '/';
+      }
+      catch(error){
+        console.log(error);
+      }
+    };
   
     return (
       <>
@@ -106,6 +118,14 @@ export default function userSideBar() {
                 onClick={() => handleSidebarItemClick("Profile")}
               >
                 <Link to=''>Profile</Link>
+              </li>
+              <li className=''>
+              <button
+                className='px-4 py-2 w-full transition-colors duration-300 cursor-pointer hover:bg-red-500  hover:text-white text-red-200 rounded-xl  border-red-700'
+                onClick={logoutHandler}
+              >
+                LogOut
+              </button>
               </li>
             </ul>
 

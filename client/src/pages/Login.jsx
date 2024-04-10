@@ -106,19 +106,19 @@ export default function Login() {
               {" "}
               please enter your details.
             </p>
-            <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-3 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent shadow-sm hover:bg-black hover:text-white">
+            {/* <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-3 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent shadow-sm hover:bg-black hover:text-white">
               <img
                 className="mr-2 h-5"
                 src="https://static.cdnlogo.com/logos/g/35/google-icon.svg"
                 alt="Google Icon"
               />{" "}
               Log in with Google
-            </button>
-            <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
+            </button> */}
+            {/* <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
               <div className="absolute left-1/2 h-6 w-14 -translate-x-1/2 bg-white text-center text-sm text-gray-500">
                 or
               </div>
-            </div>
+            </div> */}
 
             {/**form field */}
             <form className="flex flex-col pt-3 md:pt-10" onSubmit={loginHandler}>

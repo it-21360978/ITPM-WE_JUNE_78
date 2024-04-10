@@ -15,6 +15,7 @@ import Reset from './pages/Reset';
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/userDashboard';
 import EditUser from './components/editUser';
+import Home from './pages/home';
 
 // Importing product management
 import ProductAdd from './pages/ProductAdd';
@@ -39,8 +40,9 @@ export default function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="/user-dashboard/:id" element={<EditUser />} />
+          <Route path="/" element={<Home />} />
 
-          <Route path="/" element={<Navigate to="/login" />} />
+          {/* <Route path="/" element={<Navigate to="/login" />} /> */}
           <Route path="/add" element={<ProductAdd />} />
           <Route path="/plist" exact element={<Plist/>} />
           <Route path="/pview" exact element={<ProductView/>} />         
