@@ -1,6 +1,7 @@
 import React ,{useState,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import EditUser from './editUser';
+import {logout} from '../API/Auth.controller';
 
 export default function sideBar() {
 
@@ -39,6 +40,20 @@ export default function sideBar() {
         setImage(user.imagePath);
       }
     }, []);
+
+
+    const logoutHandler = async (e)=>{
+      e.preventDefault();
+      try{
+        const res = await logout();
+        sessionStorage.removeItem('User');
+        console.log(res);
+        window.location.href = '/';
+      }
+      catch(error){
+        console.log(error);
+      }
+    };
   
     return (
       <>
@@ -97,12 +112,12 @@ export default function sideBar() {
                   {userMenuOpen && (
                     <div className="absolute right-0 mt-5 w-48 py-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                       
-                      <a
-                        href="#"
+                      <button
+                        onClick={logoutHandler}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       >
                         Sign out
-                      </a>
+                      </button>
                     </div>
                   )}
                 </div>
@@ -151,6 +166,14 @@ export default function sideBar() {
               >
                 <Link to=''>Profile</Link>
               </li>
+              <li className=''>
+              <button
+                className='px-4 py-2 w-full transition-colors duration-300 cursor-pointer hover:bg-red-500  hover:text-white text-red-200 rounded-xl  border-red-700'
+                onClick={logoutHandler}
+              >
+                LogOut
+              </button>
+              </li>
             </ul>
 
             
@@ -170,6 +193,7 @@ export default function sideBar() {
         <p className="cursor-pointer text-xs leading-3 text-indigo-200">{email}</p>
       </div>
     </div>
+    
     </div>
 
 
