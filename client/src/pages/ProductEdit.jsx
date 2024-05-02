@@ -12,6 +12,7 @@ function ProductEdit(props) {
   const [Category, setCategory] = useState("");
   const [Type, setType] = useState("");
   const [size, setsize] = useState("");
+  const [Price, setPrice] = useState("");
   const [Description, setDescription] = useState("");
   const [URL, setURL] = useState("");
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function ProductEdit(props) {
         setCategory(res.data.product.Category);
         setType(res.data.product.Type);
         setsize(res.data.product.size);
+        setPrice(res.data.product.Price);
         setDescription(res.data.product.Description);
         setURL(res.data.product.URL);
       }
@@ -51,6 +53,8 @@ function ProductEdit(props) {
         setType(value);
     } else if (name === "size") {
         setsize(value);
+    } else if (name === "Price") {
+        setPrice(value);    
     } else if (name === "Description") {
         setDescription(value);
     } else if (name === "URL") {
@@ -88,6 +92,10 @@ function ProductEdit(props) {
       if (!size) {
         newErrors.size = "Size is required";
       }
+      if (!Price) {
+        newErrors.Price = "Price is required";
+      }
+
       if (!Description) {
         newErrors.Description = "Description is required";
       }
@@ -115,6 +123,7 @@ function ProductEdit(props) {
         Category:Category,
         Type:Type,
         size:size,
+        Price:Price,
         Description:Description,
         URL:URL
     };
@@ -131,6 +140,7 @@ function ProductEdit(props) {
         setCategory("");
         setType("");
         setsize("");
+        setPrice("");
         setDescription("");
         setURL("");
         navigate('/plist');
@@ -253,9 +263,24 @@ function ProductEdit(props) {
 
         </select>
           {errors.size && <p className="text-red-500">{errors.size}</p>}
+       </div>
+          <div>
+        <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+        <input
+            type="number"
+            id="Price"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="Price"
+            placeholder="price"
+            value={Price}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.Price && <p className="text-red-500">{errors.Price}</p>}
+      </div>
+   
      </div>
 
-    </div>
 
     <div>
             <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>

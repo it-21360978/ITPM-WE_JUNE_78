@@ -98,24 +98,23 @@ router.get('/product/:id', (req, res) => {
       });
   });
   
-  //get products for a specific product
-router.get('/products/:ProductName',(req,res)=>{
-  const ProductId= req.params.ProductId;
-  products.find({ ProductId: ProductId })
-  .then((products)=>{
-      return res.status(200).json({
-          success: true,
-          existingProducts:products
-          });
-      })
-      .catch((error) => {
-          return res.status(400).json({
-            error: error
-      });
-  });
-});
-  
-  
-  
+//   //get products for a specific product
+// router.get('/products/:ProductName',(req,res)=>{
+//   const ProductId= req.params.ProductId;
+//   products.find({ ProductId: ProductId })
+//   .then((products)=>{
+//       return res.status(200).json({
+//           success: true,
+//           existingProducts:products
+//           });
+//       })
+//       .catch((error) => {
+//           return res.status(400).json({
+//             error: error
+//       });
+//   });
+// });
+ 
+
 
 module.exports = router;
