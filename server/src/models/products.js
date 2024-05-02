@@ -28,7 +28,7 @@ const productSchema = new mongoose.Schema({
 
   Category: {
     type: String,
-    enum: ['Men', 'Woamn',],
+    enum: ['Men', 'Woman',],
    required: true,
     default: "",
   },
@@ -49,6 +49,12 @@ const productSchema = new mongoose.Schema({
 
   Description: {
     type: String,
+   required: true,
+    default: "",
+  },
+
+  Price: {
+    type:String,
    required: true,
     default: "",
   },

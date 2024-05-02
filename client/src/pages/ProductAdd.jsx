@@ -14,6 +14,7 @@ const ProductAdd = () => {
     Type: '',
     size: '',
     Description: '',
+    Price: '',
     URL: ''
   });
 
@@ -58,6 +59,9 @@ const ProductAdd = () => {
     if (!state.Description) {
       newErrors.Description = "Description is required";
     }
+    if (!state.Price) {
+      newErrors.Price = "Price is required";
+    }
     if (!state.URL) {
       newErrors.URL = "URL is required";
     }
@@ -71,7 +75,7 @@ const ProductAdd = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const { ProductName, Brand, color, Quantity, Category, Type, size, Description, URL} = state;
+      const { ProductName, Brand, color, Quantity, Category, Type, size, Description, Price, URL} = state;
       const data = {
         ProductName,
         Brand,
@@ -81,6 +85,7 @@ const ProductAdd = () => {
         Type,
         size,
         Description,
+        Price,
         URL
       };
       axios.post("http://localhost:3030/product/save", data)
@@ -96,6 +101,7 @@ const ProductAdd = () => {
             Type: '',
             size: '',
             Description: '',
+            Price: '',
             URL: ''
             
           });
@@ -184,7 +190,7 @@ const ProductAdd = () => {
             onChange={handleInputChange}
             required>
           <option value="Men">Men</option>
-          <option value="Woamn">Woman</option>
+          <option value="Woman">Woman</option>
 
          </select> 
           {errors.Category && <p className="text-red-500">{errors.Category}</p>}
@@ -221,6 +227,20 @@ const ProductAdd = () => {
         </select>
           {errors.size && <p className="text-red-500">{errors.size}</p>}
      </div>
+     <div>
+        <label htmlFor="quantity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+        <input
+            type="number"
+            id="Price"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            name="Price"
+            placeholder="price"
+            value={state.Price}
+            onChange={handleInputChange}
+            required
+          />
+          {errors.Price && <p className="text-red-500">{errors.Price}</p>}
+      </div>
 
     </div>
 

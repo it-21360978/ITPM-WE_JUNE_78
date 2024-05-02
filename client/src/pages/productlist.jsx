@@ -35,8 +35,8 @@ import axios from 'axios';
       product.Brand.toLowerCase().includes(searchKey) ||
       product.Category.toLowerCase().includes(searchKey) ||
       product.Type.toLowerCase().includes(searchKey) ||
-      product.size.toLowerCase().includes(searchKey) 
-    
+      product.size.toLowerCase().includes(searchKey) ||
+      product.Price.toLowerCase().includes(searchKey) 
     );
     setProducts(result);
   };
@@ -105,11 +105,14 @@ import axios from 'axios';
                     Garment Type
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Description
+                    Size
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    
+                    Price
                 </th>
+                {/* <th scope="col" className="px-6 py-3">
+                    Description
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                     Picture URL
                 </th>
@@ -125,14 +128,15 @@ import axios from 'axios';
             {products.map((product, index) => (
                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="  text-gray-900  dark:text-white text-center ">{product.ProductName}</td>
-                    <td className=" text-center">{product.Brand}</td>
-                    <td className=" text-center">{product.color}</td>
-                    <td className=" text-center">{product.Quantity}</td>
-                    <td className=" text-center">{product.Category}</td>
-                    <td className=" text-center">{product.Type}</td>
-                    <td className=" text-center">{product.size}</td>
-                    <td className=" text-center">{product.Discription}</td>
-                    <td className="">{product.URL}</td>
+                    <td className=" text-center px-1 py-5">{product.Brand}</td>
+                    <td className=" text-center px-1 py-5" >{product.color}</td>
+                    <td className=" text-center px-1 py-5">{product.Quantity}</td>
+                    <td className=" text-center px-1 py-5">{product.Category}</td>
+                    <td className=" text-center px-1 py-5">{product.Type}</td>
+                    <td className=" text-center px-1 py-5">{product.size}</td>
+                    <td className=" text-center px-1 py-5">{product.Price}</td>
+                    {/* <td className=" text-center px-1 py-5">{product.Description}</td> */}
+                    <td className="px-1 py-5">{product.URL}</td>
                     <td className="">
                         <a className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                             href="#"
