@@ -19,8 +19,8 @@ import Home from './pages/home';
 import Filter from './Filter';
 
 // Importing product management
-import ProductAdd from './pages/ProductAdd';
-import Plist from "./pages/productlist";
+// import ProductAdd from './pages/ProductAdd';
+// import Plist from "./pages/productlist";
 import ProductView from "./pages/productView";
 import ProductEdit from './pages/ProductEdit';
 
@@ -42,8 +42,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
 
           {/* <Route path="/" element={<Navigate to="/login" />} /> */}
-          <Route path="/add" element={<ProductAdd />} />
-          <Route path="/plist" exact element={<Plist/>} />
+          {/* <Route path="/add" element={<ProductAdd />} /> */}
+          {/* <Route path="/plist" exact element={<Plist/>} /> */}
           <Route path="/pview/:id" exact element={<ProductView/>} />         
           <Route path="/pedit/:id" exact element={<ProductEdit/>} />
           

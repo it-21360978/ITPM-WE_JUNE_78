@@ -25,7 +25,7 @@ export default function nav() {
             <div className="w-7/12 hidden lg:flex items-center space-x-3 border-b border-gray-200 pb-2">
               <div>
                 <svg
-                  className="fill-stroke text-gray-600 dark:text-white"
+                  className="fill-stroke dark:text-gray-600 text-white"
                   width={20}
                   height={20}
                   viewBox="0 0 20 20"
@@ -57,7 +57,7 @@ export default function nav() {
             <button
               onClick={() => setShowMenu(true)}
               aria-label="Open Menu"
-              className="text-gray-800 dark:text-white  hidden md:block lg:hidden focus:outline-none focus:ring-2 focus:ring-gray-800 rounded"
+              className="dark:text-gray-600 text-white  hidden md:block lg:hidden focus:outline-none focus:ring-2 focus:ring-gray-800 rounded"
             >
               <svg
                 className="fill-stroke"
@@ -93,7 +93,7 @@ export default function nav() {
             <button
               onClick={() => setSearch(true)}
               aria-label="Search Menu"
-              className="text-gray-800 dark:text-white md:hidden focus:outline-none focus:ring-2 focus:ring-gray-800 rounded hover:bg-gray-100 p-0.5"
+              className="dark:text-gray-800 text-white md:hidden focus:outline-none focus:ring-2 focus:ring-gray-800 rounded hover:bg-gray-100 p-0.5"
             >
               <svg
                 className="fill-stroke"
@@ -126,24 +126,24 @@ export default function nav() {
               <ul className="flex items-center space-x-10">
                 <li>
                   <Link
-                    to=""
-                    className="dark:text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    to="/"
+                    className="text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >
                     Home
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to=""
-                    className="dark:text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    to="/filter"
+                    className="text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >
-                    Catalog
+                    Catageory
                   </Link>
                 </li>
                 <li>
                   <Link
                     to=""
-                    className="dark:text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    className="text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >
                     Pages
                   </Link>
@@ -151,7 +151,7 @@ export default function nav() {
                 <li>
                   <Link
                     to=""
-                    className="dark:text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    className="text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >
                     Blog
                   </Link>
@@ -159,7 +159,7 @@ export default function nav() {
                 <li>
                   <Link
                     to=""
-                    className="dark:text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    className="text-white hover:text-orange-500  text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >
                     Contact us
                   </Link>
@@ -172,7 +172,7 @@ export default function nav() {
             <Link to="">
               <div
                 aria-label="view favourites"
-                className="hidden md:block focus:outline-none text-gray-800 dark:text-white focus:ring-2 focus:ring-gray-800 rounded hover:text-orange-500 p-0.5"
+                className="hidden md:block focus:outline-none dark:text-gray-800 text-white focus:ring-2 focus:ring-gray-800 rounded hover:text-orange-500 p-0.5"
                 href=""
               >
                 <svg
@@ -196,7 +196,7 @@ export default function nav() {
             <Link to="">
               <div
                 aria-label="Shopping bag"
-                className="hidden md:block focus:outline-none text-gray-800 dark:text-white focus:ring-2 focus:ring-gray-800 rounded hover:text-orange-500 p-0.5"
+                className="hidden md:block focus:outline-none dark:text-gray-800 text-white focus:ring-2 focus:ring-gray-800 rounded hover:text-orange-500 p-0.5"
                 href=""
               >
                 <svg
@@ -239,7 +239,7 @@ export default function nav() {
                   <div className=" items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:text-orange-500 hidden md:block">
                     <div>
                       <svg
-                        className="fill-stroke text-black dark:text-white  hover:text-orange-500"
+                        className="fill-stroke  text-white  hover:text-orange-500"
                         width={24}
                         height={24}
                         aria-hidden="true"
@@ -285,10 +285,11 @@ export default function nav() {
                 </div>
               </Link>
             )}
+            {/* Mobile responsive*/}
             <button
               onClick={() => setShowMenuSm(true)}
               aria-label="open menu"
-              className="text-gray-800 dark:text-white md:hidden focus:outline-none focus:ring-2 focus:ring-gray-800 rounded hover:bg-gray-100 p-0.5"
+              className="text-gray-800 text-white md:hidden focus:outline-none focus:ring-2 focus:ring-gray-800 rounded hover:bg-gray-100 p-0.5"
             >
               <svg
                 className="fill-stroke"
@@ -361,7 +362,7 @@ export default function nav() {
                   <input
                     type="text"
                     placeholder="Search for products"
-                    className="text-sm text-gray-600 dark:text-gray-300 focus:outline-none bg-transparent"
+                    className="text-sm text-gray-600 text-gray-300 focus:outline-none bg-transparent"
                   />
                 </div>
                 <button
@@ -397,7 +398,7 @@ export default function nav() {
                   <li className="flex items-center justify-between">
                     <Link
                       to=""
-                      className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                      className="dark:text-white  text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     >
                       Home
                     </Link>
@@ -405,7 +406,7 @@ export default function nav() {
                   <li className="flex items-center justify-between">
                     <Link
                       to=""
-                      className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                      className="dark:text-white  text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     >
                       Catalog
                     </Link>
@@ -413,7 +414,7 @@ export default function nav() {
                   <li className="flex items-center justify-between">
                     <Link
                       to=""
-                      className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                      className="dark:text-white  text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     >
                       About Us
                     </Link>
@@ -421,7 +422,7 @@ export default function nav() {
                   <li className="flex items-center justify-between">
                     <Link
                       to=""
-                      className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                      className="dark:text-white  text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     >
                       Blog
                     </Link>
@@ -429,7 +430,7 @@ export default function nav() {
                   <li className="flex items-center justify-between">
                     <Link
                       to=""
-                      className="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                      className="dark:text-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     >
                       Contact us
                     </Link>
@@ -451,7 +452,7 @@ export default function nav() {
               <div className="flex items-center space-x-3 mx-2">
                 <div>
                   <svg
-                    className="fill-stroke text-gray-800 dark:text-white"
+                    className="fill-stroke text-gray-800 text-white"
                     width={20}
                     height={20}
                     viewBox="0 0 20 20"
@@ -483,7 +484,7 @@ export default function nav() {
               <button
                 aria-label="close menu"
                 onClick={() => setSearch(false)}
-                className="text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
+                className="text-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
               >
                 <svg
                   className="fill-stroke"
@@ -515,7 +516,7 @@ export default function nav() {
               <li>
                 <Link to="">
                   <div
-                    className="flex items-center space-x-2 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    className="flex items-center space-x-2 text-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     href=""
                   >
                     <div>
@@ -557,7 +558,7 @@ export default function nav() {
               <li>
                 <Link to="">
                   <div
-                    className="flex items-center space-x-2 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
+                    className="flex items-center space-x-2 text-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                     href=""
                   >
                     <div>
@@ -599,7 +600,7 @@ export default function nav() {
                       <div className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                         <div>
                           <svg
-                            className="fill-stroke text-black dark:text-white"
+                            className="fill-stroke text-black "
                             width={24}
                             height={24}
                             aria-hidden="true"
@@ -627,7 +628,7 @@ export default function nav() {
                     <div className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                       <div>
                         <svg
-                          className="fill-stroke text-black dark:text-white"
+                          className="fill-stroke text-black "
                           width={24}
                           height={24}
                           aria-hidden="true"
@@ -644,7 +645,7 @@ export default function nav() {
                           />
                         </svg>
                       </div>
-                      <p className="text-base text-gray-200">Login</p>
+                      <p className="text-base ">Login</p>
                     </div>
                   </Link>
                 </li>
@@ -664,12 +665,12 @@ export default function nav() {
             <div className="flex items-center justify-between border-b border-gray-200 pb-4 mx-4">
               <div />
               <div>
-                <p className="text-base font-semibold text-gray-300">Menu</p>
+                <p className="dark:text-base font-semibold text-gray-300">Menu</p>
               </div>
               <button
                 aria-label="close menu"
                 onClick={() => setShowMenuSm(false)}
-                className="text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
+                className="dark:text-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
               >
                 <svg
                   className="fill-stroke"
@@ -700,7 +701,7 @@ export default function nav() {
               <li className="flex items-center justify-between">
                 <Link
                   to=""
-                  className="text-base text-gray-800 focus:outline-none dark:text-white focus:ring-2 focus:ring-gray-800 hover:underline"
+                  className=" text-gray-800 focus:outline-none text-white focus:ring-2 focus:ring-gray-800 hover:underline"
                 >
                   Home
                 </Link>
@@ -708,7 +709,7 @@ export default function nav() {
               <li className="flex items-center justify-between">
                 <Link
                   to=""
-                  className="text-base text-gray-800 focus:outline-none dark:text-white focus:ring-2 focus:ring-gray-800 hover:underline"
+                  className=" text-gray-800 focus:outline-none text-white focus:ring-2 focus:ring-gray-800 hover:underline"
                 >
                   Catalog
                 </Link>
@@ -716,7 +717,7 @@ export default function nav() {
               <li className="flex items-center justify-between">
                 <Link
                   to=""
-                  className="text-base text-gray-800 focus:outline-none dark:text-white focus:ring-2 focus:ring-gray-800 hover:underline"
+                  className="text-base text-gray-800 focus:outline-none text-white focus:ring-2 focus:ring-gray-800 hover:underline"
                 >
                   About Us
                 </Link>
@@ -724,7 +725,7 @@ export default function nav() {
               <li className="flex items-center justify-between">
                 <Link
                   to=""
-                  className="text-base text-gray-800 focus:outline-none dark:text-white focus:ring-2 focus:ring-gray-800 hover:underline"
+                  className="text-base text-gray-800 focus:outline-none text-white focus:ring-2 focus:ring-gray-800 hover:underline"
                 >
                   Blog
                 </Link>
@@ -732,7 +733,7 @@ export default function nav() {
               <li className="flex items-center justify-between">
                 <Link
                   to=""
-                  className="text-base text-gray-800 focus:outline-none dark:text-white focus:ring-2 focus:ring-gray-800 hover:underline"
+                  className="text-base text-gray-800 focus:outline-none text-white focus:ring-2 focus:ring-gray-800 hover:underline"
                 >
                   Contact us
                 </Link>
@@ -740,7 +741,7 @@ export default function nav() {
             </ul>
           </div>
           <div className="w-full h-full flex items-end">
-            <ul className="bg-gray-50 dark:bg-gray-800 py-10 px-4 flex flex-col space-y-8 w-full">
+            <ul className="bg-gray-800 py-10 px-4 flex flex-col space-y-8 w-full">
               <li>
                 <Link to="">
                   <div
@@ -749,7 +750,7 @@ export default function nav() {
                   >
                     <div>
                       <svg
-                        className="fill-stroke text-black dark:text-white"
+                        className="fill-stroke text-black text-white"
                         width={22}
                         height={22}
                         viewBox="0 0 22 22"
@@ -791,7 +792,7 @@ export default function nav() {
                   >
                     <div>
                       <svg
-                        className="fill-stroke text-black dark:text-white"
+                        className="fill-stroke text-black text-white"
                         width={20}
                         height={20}
                         viewBox="0 0 20 20"
@@ -828,7 +829,7 @@ export default function nav() {
                       <div className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                         <div>
                           <svg
-                            className="fill-stroke text-black dark:text-white"
+                            className="fill-stroke text-black text-white"
                             width={24}
                             height={24}
                             aria-hidden="true"
@@ -856,7 +857,7 @@ export default function nav() {
                     <div className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline">
                       <div>
                         <svg
-                          className="fill-stroke text-black dark:text-white"
+                          className="fill-stroke text-black text-white"
                           width={24}
                           height={24}
                           aria-hidden="true"

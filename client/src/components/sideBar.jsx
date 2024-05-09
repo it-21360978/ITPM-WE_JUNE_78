@@ -2,6 +2,11 @@ import React ,{useState,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import EditUser from './editUser';
 import {logout} from '../API/Auth.controller';
+import ProductAdd from '../pages/ProductAdd';
+import ProductList from '../pages/productlist';
+import ProductEdit from '../pages/ProductEdit';
+import Img1 from "../assets/img1.png";
+import AdminChart from './adminChart';
 
 export default function sideBar() {
 
@@ -83,7 +88,7 @@ export default function sideBar() {
                 </button>
                 <Link to="/" className="flex ms-2 md:me-24">
                   <img
-                    src=''
+                    src={Img1}
                     className="h-8 me-3"
                     alt="Logo"
                   />
@@ -110,13 +115,13 @@ export default function sideBar() {
                     />
                   </button>
                   {userMenuOpen && (
-                    <div className="absolute right-0 mt-5 w-48 py-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                    <div className="absolute right-0 mt-5 w-24 py-2 bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                       
                       <button
                         onClick={logoutHandler}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                        className=" block px-1 mx-auto py-1 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                       >
-                        Sign out
+                        Log out
                       </button>
                     </div>
                   )}
@@ -142,12 +147,12 @@ export default function sideBar() {
               >
                 <Link to=''>Dashboard</Link>
               </li>
-              <li
+              {/* <li
                 className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "users" ? 'text-black bg-gray-100' : ''}`}
                 onClick={() => handleSidebarItemClick("users")}
               >
                 <Link to= ''>Users</Link>
-              </li>
+              </li> */}
               <li
                 className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "payments" ? 'text-black bg-gray-100' : ''}`}
                 onClick={() => handleSidebarItemClick("payments")}
@@ -155,11 +160,17 @@ export default function sideBar() {
                 <Link to= ''>Payments</Link>
               </li>
               <li
-                className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "stock" ? 'text-black bg-gray-100' : ''}`}
-                onClick={() => handleSidebarItemClick("Stock")}
+                className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "Add Product" ? 'text-black bg-gray-100' : ''}`}
+                onClick={() => handleSidebarItemClick("Add Product")}
               >
-                <Link to=''>Stock</Link>
+                <Link to=''>Add Product</Link>
+              </li> <li
+                className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "Product List" ? 'text-black bg-gray-100' : ''}`}
+                onClick={() => handleSidebarItemClick("Product List")}
+              >
+                <Link to=''>Product List</Link>
               </li>
+
               <li
                 className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "Profile" ? 'text-black bg-gray-100' : ''}`}
                 onClick={() => handleSidebarItemClick("Profile")}
@@ -206,33 +217,48 @@ export default function sideBar() {
           {selectedContent === "Dashboard" && (
             <div>
               {/* Dashboard component */}
-              <h2>Dashboard Component</h2>
+      
+              <AdminChart/>
               
             </div>
           )}
-          {selectedContent === "users" && (
+          {/* {selectedContent === "users" && (
             <div>
-              {/* user component */}
+             
               <h2>users Component</h2>
               
             </div>
-          )}
+          )} */}
           {selectedContent === "payments" && (
             <div>
               {/* payment component */}
               <h2>payment Component</h2>
             </div>
           )}
-          {selectedContent === "Stock" && (
+          {selectedContent === "Add Product" && (
             <div>
               {/* stock component */}
-              <h2>Stock Component</h2>
+              <ProductAdd />
+            </div>
+          )}
+           {selectedContent === "Product List" && (
+            <div>
+              {/* Profile component */}
+              <ProductList/>
+             
             </div>
           )}
           {selectedContent === "Profile" && (
             <div>
               {/* Profile component */}
               <EditUser userId={id}/>
+             
+            </div>
+          )}
+          {selectedContent === "Product Edit" && (
+            <div>
+              {/* Profile component */}
+              <ProductEdit/>
              
             </div>
           )}

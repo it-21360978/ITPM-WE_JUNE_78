@@ -143,22 +143,24 @@ function ProductEdit(props) {
         setPrice("");
         setDescription("");
         setURL("");
-        navigate('/plist');
+        navigate('/admin');
       }
     });
   }
   };
 
   return (
-    <div className="min-w-0 flex-1 ">
+    <div className="min-w-0 flex-1 bg-orange-900 ">
+      <div>
     <br></br>
-    <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mb-10 flex px-8 ">
+    <h2 className="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight mb-10 flex justify-center ">
     Edit Product
    </h2>
   
-  <div className="mx-auto max-auto px-8  ">
+  <div className="mx-auto max-auto px-8  shadow-md shadow-gray-600 rounded-md bg-white mr-20 ml-20 ">
+    <br></br>
 <form >
-    <div className="grid gap-6 mb-6 md:grid-cols-2">
+    <div className="grid gap-6 mb-6 md:grid-cols-2 " >
       <div>
         <label htmlFor="product name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
         <input
@@ -307,7 +309,7 @@ function ProductEdit(props) {
     </div>
 
     <div className="flex justify-center">
-    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-20 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-20 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5"
   onClick={onSubmit}>Update</button>
     </div>
 
@@ -316,6 +318,7 @@ function ProductEdit(props) {
 
   </div>
   <br></br>
+  </div>
 </div>
     )
   }
