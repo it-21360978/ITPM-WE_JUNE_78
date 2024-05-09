@@ -113,9 +113,9 @@ import axios from 'axios';
                 {/* <th scope="col" className="px-6 py-3">
                     Description
                 </th> */}
-                <th scope="col" className="px-6 py-3">
+                {/* <th scope="col" className="px-6 py-3">
                     Picture URL
-                </th>
+                </th> */}
                 <th scope="col" className="px-6 py-3">
                     Action
                 </th>
@@ -136,7 +136,7 @@ import axios from 'axios';
                     <td className=" text-center px-1 py-5">{product.size}</td>
                     <td className=" text-center px-1 py-5">{product.Price}</td>
                     {/* <td className=" text-center px-1 py-5">{product.Description}</td> */}
-                    <td className="px-1 py-5">{product.URL}</td>
+                    {/* <td className="px-1 py-5">{product.URL}</td> */}
                     <td className="">
                         <a className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                             href="#"

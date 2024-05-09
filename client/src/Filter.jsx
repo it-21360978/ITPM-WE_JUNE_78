@@ -86,6 +86,7 @@ import Products from "./Products/Products.jsx";
 import Sidebar from "./Sidebar/sidebar.jsx";
 import Card from "./components/Card.jsx";
 import "./index.css";
+import Nav from "./components/nav.jsx";
 
 function Filter() {
   const [products, setProducts] = useState([]);
@@ -159,6 +160,7 @@ function Filter() {
 
   return (
     <>
+      <Nav/>
       <Sidebar handleChange={handleChange} />
       <Products result={result} />
     </>

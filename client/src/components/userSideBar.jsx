@@ -2,6 +2,7 @@ import React ,{useState ,useEffect} from 'react';
 import { Link } from "react-router-dom";
 import EditUser from './editUser';
 import {logout} from '../API/Auth.controller';
+import UserChart from './userChart';
 
 export default function userSideBar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -95,12 +96,12 @@ export default function userSideBar() {
               >
                 <Link to=''>Dashboard</Link>
               </li>
-              <li
+              {/* <li
                 className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "users" ? 'text-black bg-gray-100' : ''}`}
                 onClick={() => handleSidebarItemClick("users")}
               >
                 <Link to= ''>Users</Link>
-              </li>
+              </li> */}
               <li
                 className={`px-4 py-2 transition-colors duration-300 cursor-pointer hover:bg-gray-100  hover:text-black dark:hover:bg-gray-700 ${selectedContent === "payments" ? 'text-black bg-gray-100' : ''}`}
                 onClick={() => handleSidebarItemClick("payments")}
@@ -153,7 +154,7 @@ export default function userSideBar() {
           {selectedContent === "Dashboard" && (
             <div>
               {/* Dashboard component */}
-              <h2>Dashboard Component</h2>            
+              <UserChart/>         
             </div>
           )}
           {selectedContent === "users" && (

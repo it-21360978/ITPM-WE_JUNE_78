@@ -15,8 +15,8 @@
   }
   
   .card-img {
-    width: 100%;
-    height: auto;
+    width: 400px;
+    height: 300px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
   }
