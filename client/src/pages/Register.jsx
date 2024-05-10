@@ -236,7 +236,7 @@ export default function Register() {
 
                 <div className="col-span-6 sm:flex sm:items-center gap-6 mt-4">
                   <button type="submit" className="inline-block shrink-0 rounded-md border border-gray-600 bg-orange-600 shadow-lg px-16 py-3 text-sm font-medium text-white transition  hover:bg-orange-700 hover:rounded-full  focus:outline-none focus:ring active:text-orange-500 uppercase">
-                   {loading ? 'Loading....' : 'Create an account'}
+                   {loading ? 'Creating..' : 'Create an account'}
                   </button>
 
                   <p className="mt-4 text-sm text-gray-500 sm:mt-0">

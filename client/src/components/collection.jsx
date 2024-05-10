@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 
 export default function collection() {
   return (
@@ -30,9 +31,9 @@ export default function collection() {
                     Casual Trainers
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black hover:bg-orange-500 hover:rounded-full px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                 <Link to='/filter'> <span className="mt-1.5 inline-block bg-black hover:bg-orange-500 hover:rounded-full px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
-                  </span>
+                  </span> </Link>
                 </div>
               </a>
             </li>
@@ -50,9 +51,9 @@ export default function collection() {
                     Winter Jumpers
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white hover:bg-orange-500 hover:rounded-full">
+                  <Link to='/filter'>   <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white hover:bg-orange-500 hover:rounded-full">
                     Shop Now
-                  </span>
+                  </span> </Link>
                 </div>
               </a>
             </li>
@@ -70,9 +71,9 @@ export default function collection() {
                     Skinny Jeans Blue
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white hover:bg-orange-500 hover:rounded-full ">
+                  <Link to='/filter'>  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white hover:bg-orange-500 hover:rounded-full ">
                     Shop Now
-                  </span>
+                  </span></Link>
                 </div>
               </a>
             </li>

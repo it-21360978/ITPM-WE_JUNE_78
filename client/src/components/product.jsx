@@ -7,7 +7,7 @@ export default function product() {
   <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
    
     <div class="mb-10 md:mb-16">
-      <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Selected</h2>
+      <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Famous Selections</h2>
 
       <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of a real written text but is random or otherwise generated.</p>
     </div>
@@ -32,8 +32,8 @@ export default function product() {
           </div>
 
           <div class="flex flex-col items-end">
-            <span class="font-bold text-gray-600 lg:text-lg">$19.99</span>
-            <span class="text-sm text-red-500 line-through">$39.99</span>
+            <span class="font-bold text-gray-600 lg:text-lg">LKR.2500.99</span>
+            <span class="text-sm text-red-500 line-through">LKR.2999.99</span>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@ export default function product() {
           </div>
 
           <div class="flex flex-col items-end">
-            <span class="font-bold text-gray-600 lg:text-lg">$29.99</span>
+            <span class="font-bold text-gray-600 lg:text-lg">LKR.4029.99</span>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function product() {
           </div>
 
           <div class="flex flex-col items-end">
-            <span class="font-bold text-gray-600 lg:text-lg">$35.00</span>
+            <span class="font-bold text-gray-600 lg:text-lg">LKR.3235.00</span>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default function product() {
           </div>
 
           <div class="flex flex-col items-end">
-            <span class="font-bold text-gray-600 lg:text-lg">$49.99</span>
+            <span class="font-bold text-gray-600 lg:text-lg">LKR.5149.99</span>
           </div>
         </div>
       </div>

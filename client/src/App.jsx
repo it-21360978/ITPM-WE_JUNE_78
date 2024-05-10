@@ -18,6 +18,10 @@ import EditUser from './components/editUser';
 import Home from './pages/home';
 import Filter from './Filter';
 
+//Auth checking
+import AdminAuth from './components/adminAuth';
+import UserAuth from './components/userAuth';
+
 // Importing product management
 // import ProductAdd from './pages/ProductAdd';
 // import Plist from "./pages/productlist";
@@ -36,8 +40,8 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPW />} />
           <Route path="/reset/:token" element={<Reset />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/admin" element={<AdminAuth><AdminDashboard /></AdminAuth>} />
+          <Route path="/user-dashboard" element={<UserAuth><UserDashboard /></UserAuth>} />
           <Route path="/user-dashboard/:id" element={<EditUser />} />
           <Route path="/" element={<Home />} />
 
