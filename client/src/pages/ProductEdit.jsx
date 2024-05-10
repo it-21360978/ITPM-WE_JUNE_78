@@ -229,7 +229,7 @@ function ProductEdit(props) {
             onChange={handleInputChange}
             required>
           <option value="Men">Men</option>
-          <option value="Woamn">Woman</option>
+          <option value="Woman">Woman</option>
 
          </select> 
           {errors.Category && <p className="text-red-500">{errors.Category}</p>}
@@ -324,3 +324,4 @@ function ProductEdit(props) {
   }
 
 export default ProductEdit;
+

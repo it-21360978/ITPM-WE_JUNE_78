@@ -39,7 +39,7 @@ export default function AdminChart() {
 
             <div class="mt-4">
 
-              <p class="text-lg font-semibold text-gray-800">Total Products</p>
+              <p class="text-lg font-semibold text-gray-800">Total Brands</p>
 
 
             </div>

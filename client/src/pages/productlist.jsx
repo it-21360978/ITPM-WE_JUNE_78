@@ -45,7 +45,7 @@ import axios from 'axios';
     const searchKey = e.currentTarget.value;
     axios.get('http://localhost:3030/products').then((res) => {
       if (res.data.success) {
-        filterData(res.data.existingTickets, searchKey);
+        filterData(res.data.existingProducts, searchKey);
       }
     });
     setSearchKey(searchKey);
@@ -63,7 +63,7 @@ import axios from 'axios';
           </h3>
         </div>
 
-      { /* <div className="col-lg-3 mt-2 mb-3">
+      {/* <div className="col-lg-3 mt-2 mb-3">
           <input
             className="form-control"
             type="search"
@@ -72,13 +72,27 @@ import axios from 'axios';
             value={searchKey}
             onChange={handleSearchArea}
           />
-        </div>*/}
+        </div>  */}
+      <form className="max-w-md mx-5" >
+      <div className="relative">
+        <input
+          type="search"
+          id="default-search"
+          className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search ProductName, Brand, Category..."
+          name="searchQuery"
+          onChange={handleSearchArea}
+          required
+        />
+      </div>
+    </form>
+
       </div>
    <div  > 
-      <div><center>
+      {/* <div><center>
         <h4  class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-2xl dark:text-white">
        <mark class="px-2 text-white bg-blue-600 rounded dark:bg-blue-500"> Total Products:  {products.length}</mark></h4>
-      </center></div>
+      </center></div> */}
 
 <br></br>
 <div  className="relative overflow-x-auto shadow-md sm:rounded-lg">

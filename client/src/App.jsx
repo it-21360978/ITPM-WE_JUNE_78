@@ -23,6 +23,7 @@ import Filter from './Filter';
 // import Plist from "./pages/productlist";
 import ProductView from "./pages/productView";
 import ProductEdit from './pages/ProductEdit';
+import TryOn from './components/tryon'
 
 
 
@@ -48,7 +49,7 @@ export default function App() {
           <Route path="/pedit/:id" exact element={<ProductEdit/>} />
           
           <Route path="/filter" exact element={<Filter/>}/>
-
+          <Route path="/t" exact element={<TryOn/>}/>
   
 
         </Routes>

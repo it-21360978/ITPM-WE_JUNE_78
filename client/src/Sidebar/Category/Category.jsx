@@ -18,14 +18,8 @@ function Category({ handleChg }) {
         />
         <Input
           handleChange={handleChg}
-          value="Woamn"
-          ProductName="Woamn"
-          name="test"
-        />
-        <Input
-          handleChange={handleChg}
-          value="Child"
-          ProductName="Child"
+          value="Woman"
+          ProductName="Woman"
           name="test"
         />
        

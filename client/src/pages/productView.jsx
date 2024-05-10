@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Rating } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import axios from 'axios';
 import ProductReview from '../components/productReview';
 import Nav from "../components/nav";
@@ -35,6 +35,7 @@ export default function ProductView() {
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(products.colors[0])
   const [selectedSize, setSelectedSize] = useState(products.sizes[2])
+  const [productImageUrl, setProductImageUrl] = useState('');
 
   useEffect(() => {
     axios.get(`http://localhost:3030/product/${id}`)
@@ -52,7 +53,12 @@ export default function ProductView() {
 
   const { URL, Description, Price , size, color , ProductName,Brand,Quantity} = product;
  
-
+  const handle3DButtonClick = () => {
+    if (product && product.URL) {
+      setProductImageUrl(product.URL); // Update productImageUrl state with product URL
+      console.log(product.URL);
+    }
+  };
   return (
     <>
    <div>
@@ -69,9 +75,10 @@ export default function ProductView() {
                   src={URL}
                   className="h-full w-full object-cover object-center"
                 />
-                <button className="absolute top-10 right-10 transform translate-x-1/2 -translate-y-1/2 bg-green-500 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl">
+                <Link to='/t'>
+                <button onClick={handle3DButtonClick} className="absolute top-10 right-10 transform translate-x-1/2 -translate-y-1/2 bg-green-500 rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl">
                   3D
-                </button>
+                </button></Link>
               </div>
             )}
             <div className="flex flex-wrap space-x-5 justify-center">
@@ -118,9 +125,9 @@ export default function ProductView() {
               {/* Reviews */}
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
-                  <Rating name="read-only" value={Price} readOnly />
-                  <p className="opacity-50 text-sm">{Price} Ratings</p>
-                  <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">{Price} Reviews</p>
+                  <Rating name="read-only" value={Quantity} readOnly />
+                  <p className="opacity-50 text-sm">{Quantity} Ratings</p>
+                  <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">{Quantity} Reviews</p>
                 </div>
               </div>
 
