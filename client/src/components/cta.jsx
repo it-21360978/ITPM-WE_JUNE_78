@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function cta() {
   return (
@@ -36,9 +37,9 @@ export default function cta() {
               We offer a huge colletion of premium clothing that are crafted
               with excellence for our adored customers
             </p>
-            <button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  text-white text-base leading-4 bg-black lg:px-10 py-4 lg:w-auto w-72 mt-16 hover:bg-orange-500 hover:rounded-full">
+           <Link to ='/filter'><button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  text-white text-base leading-4 bg-black lg:px-10 py-4 lg:w-auto w-72 mt-16 hover:bg-orange-500 hover:rounded-full">
               Discover More
-            </button>
+            </button></Link> 
           </div>
           <div className="relative group">
             <img

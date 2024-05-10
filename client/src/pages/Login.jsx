@@ -153,7 +153,7 @@ export default function Login() {
                 type="submit"
                 className="w-full rounded-lg bg-orange-600 hover:bg-orange-700 hover:rounded-full px-4 py-3 text-center text-base font-semibold uppercase text-white shadow-xl ring-gray-500 ring-offset-2 transition focus:ring-2"
               >
-                {loading ? 'loading...' : 'Log in'}
+                {loading ? 'Authenticating...' : 'Log in'}
               </button>
             </form>
             <div className="py-12 text-center gap-3">
